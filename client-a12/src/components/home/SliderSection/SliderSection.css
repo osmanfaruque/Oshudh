@@ -1,0 +1,82 @@
+/* Custom Swiper Pagination Styles */
+.custom-slider .swiper-pagination {
+    bottom: 20px !important;
+    z-index: 10;
+  }
+  
+  /* Updated pagination bullet styles for numbers */
+  .custom-pagination-bullet {
+    width: 40px !important;
+    height: 40px !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 4px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    color: white !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border: 2px solid transparent !important;
+    opacity: 1 !important;
+  }
+  
+  .custom-pagination-bullet.swiper-pagination-bullet-active {
+    background: #2563eb !important;
+    border-color: white !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+  }
+  
+  .custom-pagination-bullet:hover {
+    background: rgba(37, 99, 235, 0.8) !important;
+    transform: scale(1.05) !important;
+  }
+  
+  /* Legacy bullet styles (keeping for fallback) */
+  .custom-bullet {
+    width: 40px !important;
+    height: 40px !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 4px !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    color: white !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border: 2px solid transparent !important;
+    opacity: 1 !important;
+  }
+  
+  .custom-bullet-active {
+    background: #2563eb !important;
+    border-color: white !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  }
+  
+  .custom-bullet:hover {
+    background: rgba(37, 99, 235, 0.8) !important;
+    transform: scale(1.05) !important;
+  }
+  
+  /* Navigation arrows styling */
+  .custom-slider .swiper-button-next,
+  .custom-slider .swiper-button-prev {
+    color: white !important;
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-radius: 50% !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .custom-slider .swiper-button-next:hover,
+  .custom-slider .swiper-button-prev:hover {
+    background: rgba(37, 99, 235, 0.8) !important;
+  }
