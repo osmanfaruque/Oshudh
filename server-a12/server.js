@@ -1560,6 +1560,9 @@ async function run() {
     app.get("/payment/history", verifyToken, getPaymentHistory);
     app.get("/payment/history/user", verifyToken, getUserPaymentHistory);
     app.get("/payment/history/seller", verifyToken, getSellerPaymentHistory);
+    
+    // Public payments endpoint for charts (with filtering)
+    app.get("/payments", getAllPaymentsPublic);
 
     // =============== USER DASHBOARD API ===============
     app.get("/user/dashboard", verifyToken, getUserDashboard);
