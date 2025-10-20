@@ -14,6 +14,32 @@ import {
   FaClock,
   FaCheckCircle,
 } from "react-icons/fa";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+import { Bar, Doughnut } from "react-chartjs-2";
+
+// Register ChartJS components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const AdminDashboard = () => {
   const setTitle = useReTitle();
@@ -52,6 +78,116 @@ const AdminDashboard = () => {
     retry: 2,
     retryDelay: 1000,
   });
+
+  // Fetch payments for chart data
+  const { data: payments = [] } = useQuery({
+    queryKey: ["allPayments"],
+    queryFn: async () => {
+      const { data } = await axios.get(`${API_CONFIG.BASE_URL}/payments`, {
+        headers: API_CONFIG.HEADERS,
+      });
+      return data || [];
+    },
+  });
+
+  // Prepare chart data - Monthly revenue
+  const getMonthlyRevenueData = () => {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const currentYear = new Date().getFullYear();
+    
+    const monthlyRevenue = months.map((month, index) => {
+      return payments
+        .filter((payment) => {
+          const paymentDate = new Date(payment.date);
+          return (
+            paymentDate.getFullYear() === currentYear &&
+            paymentDate.getMonth() === index &&
+            payment.status === "paid"
+          );
+        })
+        .reduce((sum, p) => sum + (p.amount || 0), 0);
+    });
+
+    const monthlyOrders = months.map((month, index) => {
+      return payments.filter((payment) => {
+        const paymentDate = new Date(payment.date);
+        return (
+          paymentDate.getFullYear() === currentYear &&
+          paymentDate.getMonth() === index
+        );
+      }).length;
+    });
+
+    return { labels: months, revenue: monthlyRevenue, orders: monthlyOrders };
+  };
+
+  const chartData = getMonthlyRevenueData();
+
+  const salesChartData = {
+    labels: chartData.labels,
+    datasets: [
+      {
+        label: "Revenue (৳)",
+        data: chartData.revenue,
+        backgroundColor: "rgba(37, 99, 235, 0.8)",
+        borderColor: "rgb(37, 99, 235)",
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const ordersChartData = {
+    labels: ["Paid", "Pending", "Total"],
+    datasets: [
+      {
+        label: "Orders",
+        data: [
+          stats?.paidOrders || 0,
+          stats?.pendingOrders || 0,
+          stats?.totalOrders || 0,
+        ],
+        backgroundColor: [
+          "rgba(34, 197, 94, 0.8)",
+          "rgba(251, 146, 60, 0.8)",
+          "rgba(37, 99, 235, 0.8)",
+        ],
+        borderColor: [
+          "rgb(34, 197, 94)",
+          "rgb(251, 146, 60)",
+          "rgb(37, 99, 235)",
+        ],
+        borderWidth: 2,
+      },
+    ],
+  };
+
+  const barChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+    },
+  };
 
   if (isLoading) {
     return (
@@ -223,35 +359,27 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Chart Placeholder */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <FaChartLine className="text-blue-600" />
-          Sales Analytics Overview
-        </h3>
-        <div className="h-80 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-lg border-2 border-dashed border-blue-200">
-          <div className="text-center">
-            <FaChartLine className="text-8xl text-blue-300 mx-auto mb-4" />
-            <p className="text-gray-600 font-medium text-lg">
-              Sales Trend Chart
-            </p>
-            <p className="text-sm text-gray-500 mt-2">
-              Revenue, orders, and growth metrics visualization
-            </p>
-            <div className="mt-4 flex gap-4 justify-center text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span className="text-gray-600">Revenue</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <span className="text-gray-600">Orders</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                <span className="text-gray-600">Users</span>
-              </div>
-            </div>
+      {/* Sales Analytics Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Monthly Revenue Bar Chart */}
+        <div className="lg:col-span-2 bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <FaChartLine className="text-blue-600" />
+            Monthly Revenue - {new Date().getFullYear()}
+          </h3>
+          <div className="h-80">
+            <Bar data={salesChartData} options={barChartOptions} />
+          </div>
+        </div>
+
+        {/* Order Status Doughnut Chart */}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <FaShoppingCart className="text-blue-600" />
+            Order Distribution
+          </h3>
+          <div className="h-80">
+            <Doughnut data={ordersChartData} options={doughnutOptions} />
           </div>
         </div>
       </div>

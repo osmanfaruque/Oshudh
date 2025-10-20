@@ -2,6 +2,9 @@ import React from "react";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useReTitle } from "re-title";
 import { Link } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import API_CONFIG from "../../../configs/api.config";
 import {
   FaHistory,
   FaUser,
@@ -11,6 +14,32 @@ import {
   FaBox,
   FaClock,
 } from "react-icons/fa";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+import { Line, Bar } from "react-chartjs-2";
+
+// Register ChartJS components
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
 
 const UserDashboard = () => {
   const setTitle = useReTitle();
@@ -20,12 +49,86 @@ const UserDashboard = () => {
     setTitle("User Dashboard | Oshudh");
   }, [setTitle]);
 
-  // Mock stats (in real app, fetch from API)
+  // Fetch user payment history for statistics
+  const { data: payments = [] } = useQuery({
+    queryKey: ["userPayments", currentUser?.email],
+    queryFn: async () => {
+      const { data } = await axios.get(
+        `${API_CONFIG.BASE_URL}/payments?buyerEmail=${currentUser.email}`,
+        { headers: API_CONFIG.HEADERS }
+      );
+      return data || [];
+    },
+    enabled: !!currentUser?.email,
+  });
+
+  // Calculate stats from actual data
   const userStats = {
-    totalOrders: 0,
-    totalSpent: 0,
-    pendingOrders: 0,
-    completedOrders: 0,
+    totalOrders: payments.length,
+    totalSpent: payments.reduce((sum, p) => sum + (p.amount || 0), 0),
+    pendingOrders: payments.filter((p) => p.status === "pending").length,
+    completedOrders: payments.filter((p) => p.status === "paid").length,
+  };
+
+  // Prepare chart data - Last 7 days order activity
+  const getLast7DaysData = () => {
+    const last7Days = [];
+    const today = new Date();
+    
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      last7Days.push(date.toLocaleDateString("en-US", { month: "short", day: "numeric" }));
+    }
+
+    const orderCounts = last7Days.map((day) => {
+      return payments.filter((payment) => {
+        const paymentDate = new Date(payment.date).toLocaleDateString("en-US", { 
+          month: "short", 
+          day: "numeric" 
+        });
+        return paymentDate === day;
+      }).length;
+    });
+
+    return { labels: last7Days, data: orderCounts };
+  };
+
+  const chartData = getLast7DaysData();
+
+  const orderActivityData = {
+    labels: chartData.labels,
+    datasets: [
+      {
+        label: "Orders",
+        data: chartData.data,
+        borderColor: "rgb(37, 99, 235)",
+        backgroundColor: "rgba(37, 99, 235, 0.1)",
+        tension: 0.4,
+        fill: true,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
   };
 
   return (
@@ -105,20 +208,14 @@ const UserDashboard = () => {
         </div>
       </div>
 
-      {/* Activity Chart Placeholder */}
+      {/* Order Activity Chart */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
           <FaChartLine className="text-blue-600" />
-          Order Activity Overview
+          Order Activity - Last 7 Days
         </h3>
-        <div className="h-64 flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg border-2 border-dashed border-blue-200">
-          <div className="text-center">
-            <FaChartLine className="text-6xl text-blue-300 mx-auto mb-4" />
-            <p className="text-gray-600 font-medium">Your Order Activity Chart</p>
-            <p className="text-sm text-gray-500 mt-2">
-              Place orders to see your activity trends here
-            </p>
-          </div>
+        <div className="h-64">
+          <Line data={orderActivityData} options={chartOptions} />
         </div>
       </div>
 
