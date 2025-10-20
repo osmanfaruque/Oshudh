@@ -27,6 +27,21 @@ const NavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const { cartCount } = useCart();
+
+  // Define visible routes
+  const navLinks = !currentUser
+    ? [
+        { to: "/", label: "Home" },
+        { to: "/shop", label: "Shop" },
+        { to: "/category/tablet", label: "Categories" },
+      ]
+    : [
+        { to: "/", label: "Home" },
+        { to: "/shop", label: "Shop" },
+        { to: "/cart", label: `Cart${cartCount ? ` (${cartCount})` : ""}` },
+        { to: "/checkout", label: "Checkout" }
+      ];
+
   const handleLogout = () => {
     logout()
       .then(() => {
@@ -78,121 +93,75 @@ const NavBar = () => {
     }
   };
 
-  const navLinks = (
-    <>
-      <li>
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `px-3 py-2 rounded-md text-sm font-medium ${
-              isActive
-                ? "bg-medical-primary text-white bg-black"
-                : "text-gray-700 hover:bg-gray-100"
-            }`
-          }
-        >
-          Home
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/shop"
-          className={({ isActive }) =>
-            `px-3 py-2 rounded-md text-sm font-medium ${
-              isActive
-                ? "bg-medical-primary text-white bg-black"
-                : "text-gray-700 hover:bg-gray-100"
-            }`
-          }
-        >
-          Shop
-        </NavLink>
-      </li>
+  return (
+    <nav className="fixed top-0 inset-x-0 z-50 medical-nav text-white shadow">
+      <div className="container mx-auto px-4 ">
+        {/* Bar height */}
+        <div className="flex h-16 items-center justify-between">
+          {/* Left: Brand */}
+          <div className="flex items-center">
+            <Link to="/" className="flex items-center">
+              <img src="/icon.png" alt="Oshudh" className="h-8 w-8 mr-2" />
+              <span className="font-bold text-lg">Oshudh</span>
+            </Link>
+          </div>
 
-      {/* Category Dropdown  */}
-      <li
-        className="relative"
-        onMouseEnter={() => setIsCategoryDropdownOpen(true)}
-        onMouseLeave={() => setIsCategoryDropdownOpen(false)}
-      >
-        <button className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center">
-          Categories
-          <svg
-            className="ml-1 w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
+          {/* Center: Desktop Nav */}
+          <ul className="hidden md:flex items-center gap-4">
+            {navLinks.map((link) => (
+              <li key={link.to}>
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) =>
+                    `px-3 py-2 rounded-md text-sm font-medium ${
+                      isActive ? "bg-white/15" : "hover:bg-white/10"
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
 
-        {/* Dropdown Menu */}
-        {isCategoryDropdownOpen && (
-          <div className="absolute top-full left-0 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-            <div className="py-1">
-              {categories && categories.length > 0 ? (
-                categories.map((category) => (
-                  <Link
-                    key={category.path}
-                    to={category.path}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-medical-primary transition-colors"
-                    onClick={() => setIsCategoryDropdownOpen(false)}
-                  >
-                    {category.icon} {category.name}
-                  </Link>
-                ))
-              ) : (
-                <div className="px-4 py-2 text-sm text-gray-500">
-                  Loading categories...
+            {/* Categories dropdown kept for desktop hover */}
+            <li
+              className="relative"
+              onMouseEnter={() => setIsCategoryDropdownOpen(true)}
+              onMouseLeave={() => setIsCategoryDropdownOpen(false)}
+            >
+              <button className="px-3 py-2 rounded-md text-sm font-medium hover:bg-white/10 flex items-center">
+                Categories
+                <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isCategoryDropdownOpen && (
+                <div className="absolute top-full left-0 w-56 bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                  <div className="py-1 text-gray-700 ">
+                    {categories && categories.length > 0 ? (
+                      categories.map((category) => (
+                        <Link
+                          key={category.path}
+                          to={category.path}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-medical-primary transition-colors"
+                          onClick={() => setIsCategoryDropdownOpen(false)}
+                        >
+                          {category.icon} {category.name}
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="px-4 py-2 text-sm text-gray-500">
+                        Loading categories...
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
-            </div>
-          </div>
-        )}
-      </li>
-    </>
-  );
+            </li>
+          </ul>
 
-  return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo and Website Name */}
-          <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center">
-              <img src="/icon.png" alt="Oshudh" className="h-8 w-auto" />
-              <span className="ml-2 text-xl font-bold text-medical-primary">
-                Oshudh
-              </span>
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <ul className="ml-10 flex items-baseline space-x-4">{navLinks}</ul>
-          </div>
-
-          {/* Right-side elements */}
+          {/* Right: Language + Auth */}
           <div className="flex items-center">
-            {/* Cart Icon */}
-            <Link
-              to="/cart"
-              className="relative p-2 text-gray-700 hover:text-medical-primary transition-colors"
-            >
-              <FaShoppingCart size={20} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white font-bold">
-                  {cartCount > 99 ? "99+" : cartCount}
-                </span>
-              )}
-            </Link>
-
             {/* Language Dropdown */}
             <div className="relative ml-4">
               <div className="dropdown dropdown-end">
@@ -218,19 +187,18 @@ const NavBar = () => {
               </div>
             </div>
 
-            {/* User Authentication */}
-            <div className="ml-4">
+            {/* Auth */}
+            <div className="ml-2">
               {!currentUser ? (
-                <Link to="/login" className="btn btn-primary btn-sm">
-                  Join Us
-                </Link>
+                <div className="flex items-center gap-2">
+                  {/* Logged-out: keep CTA minimal */}
+                  <Link to="/login" className="btn btn-sm bg-white text-medical-primary border-none hover:bg-gray-100">
+                    Join Us
+                  </Link>
+                </div>
               ) : (
                 <div className="dropdown dropdown-end">
-                  <div
-                    tabIndex={0}
-                    role="button"
-                    className="btn btn-ghost btn-circle avatar"
-                  >
+                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                     <div className="w-10 rounded-full overflow-hidden">
                       {currentUser.photoURL ? (
                         <img
@@ -259,12 +227,19 @@ const NavBar = () => {
                   </div>
                   <ul
                     tabIndex={0}
-                    className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52"
+                    className="menu menu-sm dropdown-content mt-3 z-[60] p-2 shadow bg-white rounded-box w-60 text-gray-700"
                   >
                     <li className="p-2 font-semibold">
                       {currentUser.displayName || currentUser.email || "User"}
                     </li>
-                    <div className="divider my-0"></div>
+                    <div className="divider my-1"></div>
+                    {/* Protected quick links */}
+                    <li className="menu-title">Quick Access</li>
+                    <li><Link to="/cart">Cart</Link></li>
+                    <li><Link to="/checkout">Checkout</Link></li>
+                    <li><Link to="/invoice">Invoice</Link></li>
+                    <li><Link to="/dashboard">Dashboard</Link></li>
+                    <div className="divider my-1"></div>
                     <li>
                       <Link to="/update-profile" className="flex items-center">
                         <FaUser className="mr-2" /> Update Profile
@@ -287,51 +262,62 @@ const NavBar = () => {
                 </div>
               )}
             </div>
-          </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+            {/* Mobile menu button */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-medical-primary"
+              className="md:hidden ml-2 btn btn-ghost btn-circle text-white"
+              onClick={() => setIsMobileMenuOpen((s) => !s)}
+              aria-label="Toggle Menu"
             >
-              <FaBars size={20} />
+              <FaBars />
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden">
-          <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navLinks}
-            <li className="px-3 py-2">
-              <span className="text-sm font-medium text-gray-700">
-                Categories:
-              </span>
-              <ul className="ml-4 mt-2 space-y-1">
-                {categories && categories.length > 0 ? (
-                  categories.map((category) => (
-                    <li key={category.path}>
-                      <Link
-                        to={category.path}
-                        className="block px-2 py-1 text-sm text-gray-600 hover:text-medical-primary"
-                      >
-                        {category.icon} {category.name}
-                      </Link>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden pb-3">
+            <ul className="px-2 pt-2 space-y-1">
+              {navLinks.map((link) => (
+                <li key={link.to}>
+                  <NavLink
+                    to={link.to}
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-sm ${isActive ? "bg-white/15" : "hover:bg-white/10"}`
+                    }
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
+
+              {/* Mobile categories */}
+              <li className="px-3 py-2">
+                <span className="text-sm font-medium">Categories:</span>
+                <ul className="ml-2 mt-2 space-y-1">
+                  {categories && categories.length > 0 ? (
+                    categories.map((category) => (
+                      <li key={category.path}>
+                        <Link
+                          to={category.path}
+                          className="block px-2 py-1 text-sm text-gray-600 hover:text-medical-primary"
+                        >
+                          {category.icon} {category.name}
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="px-2 py-1 text-sm text-gray-500">
+                      Loading categories...
                     </li>
-                  ))
-                ) : (
-                  <li className="px-2 py-1 text-sm text-gray-500">
-                    Loading categories...
-                  </li>
-                )}
-              </ul>
-            </li>
-          </ul>
-        </div>
-      )}
+                  )}
+                </ul>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

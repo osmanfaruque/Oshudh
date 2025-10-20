@@ -11,7 +11,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className=" text-white medical-footer">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -20,35 +20,35 @@ const Footer = () => {
               <img src="/icon.png" alt="Oshudh" className="h-10 w-auto" />
               <div className="ml-3">
                 <h3 className="text-2xl font-bold text-white">Oshudh</h3>
-                <p className="text-sm text-gray-400">Health at Door</p>
+                <p className="text-sm text-gray-200">Health at Door</p>
               </div>
             </div>
-            <p className="text-gray-400 mb-4">
+            <p className="text-gray-200 mb-4">
               Your trusted multi-vendor medicine e-commerce platform. Quality
               healthcare products delivered to your doorstep.
             </p>
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-200 hover:text-white transition-colors"
               >
                 <FaFacebook size={20} />
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-200 hover:text-white transition-colors"
               >
                 <FaTwitter size={20} />
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-200 hover:text-white transition-colors"
               >
                 <FaInstagram size={20} />
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-200 hover:text-white transition-colors"
               >
                 <FaLinkedin size={20} />
               </a>
@@ -64,7 +64,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-200 hover:text-white transition-colors"
                 >
                   Home
                 </Link>
@@ -72,7 +72,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/shop"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-200 hover:text-white transition-colors"
                 >
                   Shop
                 </Link>
@@ -80,7 +80,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/category/tablet"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-200 hover:text-white transition-colors"
                 >
                   Tablets
                 </Link>
@@ -97,7 +97,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-200 hover:text-white transition-colors"
                 >
                   Contact Us
                 </a>
@@ -105,7 +105,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-200 hover:text-white transition-colors"
                 >
                   FAQ
                 </a>
@@ -113,7 +113,7 @@ const Footer = () => {
               <li>
                 <a
                   href="#"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-200 hover:text-white transition-colors"
                 >
                   Privacy Policy
                 </a>
@@ -129,17 +129,17 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center">
                 <FaMapMarkerAlt className="text-medical-primary mr-3" />
-                <span className="text-gray-400">
+                <span className="text-gray-200">
                   123 Health Street, Medical City, BD
                 </span>
               </div>
               <div className="flex items-center">
                 <FaPhone className="text-medical-primary mr-3" />
-                <span className="text-gray-400">+880 1234-567890</span>
+                <span className="text-gray-200">+880 1234-567890</span>
               </div>
               <div className="flex items-center">
                 <FaEnvelope className="text-medical-primary mr-3" />
-                <span className="text-gray-400">info@oshudh.com</span>
+                <span className="text-gray-200">info@oshudh.com</span>
               </div>
             </div>
           </div>
@@ -150,10 +150,10 @@ const Footer = () => {
       <div className="border-t border-gray-700">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-200 text-sm">
               © {new Date().getFullYear()} Oshudh. All rights reserved.
             </p>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-200 text-sm">
               Developed by{" "}
               <a
                 href="https://github.com/osmanfaruque"

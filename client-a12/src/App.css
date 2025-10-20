@@ -49,3 +49,9 @@ body {
 .loading {
   color: #2563eb;
 }
+.medical-nav, .medical-footer {
+  background: linear-gradient(90deg, var(--medical-primary), var(--medical-secondary));
+}
+.medical-nav a:hover {
+  background-color: #8eaff1; /* gray-100 */
+}

@@ -7,7 +7,8 @@ function App() {
   return (
     <>
       <NavBar />
-      <div className="min-h-[calc(100vh-292px)]">
+      {/* Offset for fixed navbar height */}
+      <div className="pt-16 min-h-[calc(100vh-292px)]">
         <Outlet />
       </div>
       <Footer />
