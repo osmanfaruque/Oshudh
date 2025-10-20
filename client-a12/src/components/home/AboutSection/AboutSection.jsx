@@ -108,7 +108,7 @@ const AboutSection = () => {
 
         {/* CTA Section */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-primary to-secondary text-white rounded-2xl p-8">
+          <div className="medical-nav text-white rounded-2xl p-8">
             <h3 className="text-3xl font-bold mb-4">
               Ready to Experience Better Healthcare? 🌟
             </h3>
