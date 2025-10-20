@@ -26,14 +26,6 @@ app.use(
       "https://oshudh-a12.vercel.app",
     ],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Accept",
-      "X-Requested-With",
-    ],
-    optionsSuccessStatus: 200,
   })
 );
 
@@ -120,7 +112,7 @@ const client = new MongoClient(uri, {
   },
 });
 
-let db;
+let db = client.db("oshudh_db");;
 
 const connectDB = async () => {
   try {
@@ -1184,6 +1176,7 @@ const getAdvertisements = async (req, res) => {
 
     res.json({ success: true, data: advertisements });
   } catch (error) {
+    console.error("getAdvertisements error:", error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -1203,6 +1196,7 @@ const getActiveAdvertisements = async (req, res) => {
 
     res.json({ success: true, data: activeAds });
   } catch (error) {
+    console.error("getActiveAdvertisements error:", error);
     res.status(500).json({ success: false, error: error.message });
   }
 };
@@ -1495,7 +1489,7 @@ const getSellerAdvertisements = async (req, res) => {
 
 async function run() {
   try {
-    await connectDB();
+    // await connectDB();
 
     // =============== MEDICINES API ===============
     app.get("/medicines", getMedicines);
@@ -1510,9 +1504,7 @@ async function run() {
     // =============== AUTH/USER API ===============
     app.post("/auth/profile", verifyToken, saveUser);
     app.get("/auth/profile", verifyToken, getUserProfile);
-    app.post("/auth/users", verifyToken, saveUser);
-    app.get("/auth/users", verifyToken, getUserProfile);
-    app.post("/auth/register", verifyToken, saveUser); 
+    app.post("/auth/register", verifyToken, saveUser);
     app.post("/auth/google-login", verifyToken, async (req, res) => {
       try {
         const db = getDB();
@@ -1534,11 +1526,10 @@ async function run() {
           user = userData;
         } else {
         }
-
-        res.json({ 
-          success: true, 
-          message: "Google login successful", 
-          data: user 
+        res.json({
+          success: true,
+          message: "Google login successful",
+          data: user,
         });
       } catch (error) {
         console.error("Google login error:", error);
@@ -1560,9 +1551,6 @@ async function run() {
     app.get("/payment/history", verifyToken, getPaymentHistory);
     app.get("/payment/history/user", verifyToken, getUserPaymentHistory);
     app.get("/payment/history/seller", verifyToken, getSellerPaymentHistory);
-    
-    // payments endpoint for charts (with filtering)
-    app.get("/payments", getAllPaymentsPrivate);
 
     // =============== USER DASHBOARD API ===============
     app.get("/user/dashboard", verifyToken, getUserDashboard);
@@ -1691,39 +1679,6 @@ async function run() {
     );
     app.get("/advertisements/active", getActiveAdvertisements);
 
-    // Test route
-    app.get("/", (req, res) => {
-      res.json({
-        message: "Oshudh: Health at Door Server Running! 🏥",
-        timestamp: new Date().toISOString(),
-        developer: "osmanfaruque",
-        firebaseAdmin: "initialized",
-        database: "connected",
-      });
-    });
-
-    // Test auth endpoint
-    app.get("/test-auth", verifyToken, async (req, res) => {
-      try {
-        const db = getDB();
-        
-        const user = await db
-          .collection("users")
-          .findOne({ email: req.user.email });
-        
-        res.json({
-          success: true,
-          message: "Authentication working",
-          userFromToken: req.user,
-          userFromDB: user,
-          dbConnected: true
-        });
-      } catch (error) {
-        console.error("Test auth error:", error);
-        res.status(500).json({ success: false, error: error.message });
-      }
-    });
-
     // Health check route
     app.get("/health", (req, res) => {
       res.json({
@@ -1731,26 +1686,6 @@ async function run() {
         timestamp: new Date().toISOString(),
         uptime: process.uptime(),
         database: db ? "connected" : "disconnected",
-      });
-    });
-
-    // Debug endpoint
-    app.get("/debug", (req, res) => {
-      res.json({
-        nodeEnv: process.env.NODE_ENV,
-        port: process.env.PORT,
-        mongoUri: process.env.MONGO_URI ? "present" : "missing",
-        stripeKey: process.env.STRIPE_SECRET_KEY ? "present" : "missing",
-        firebaseApps: admin.apps.length,
-        availableRoutes: [
-          "POST /auth/profile",
-          "GET /auth/profile", 
-          "POST /auth/users",
-          "GET /auth/users",
-          "POST /auth/register",
-          "POST /auth/google-login",
-          "GET /test-auth"
-        ]
       });
     });
 
