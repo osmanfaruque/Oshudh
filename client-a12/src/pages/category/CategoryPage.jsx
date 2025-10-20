@@ -182,7 +182,7 @@ const CategoryPage = () => {
           </p>
         </div>
 
-        {/* Medicine Table */}
+        {/* Medicine Cards Grid */}
         {medicines.length === 0 ? (
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
             <div className="text-6xl text-gray-300 mb-4">💊</div>
@@ -212,124 +212,140 @@ const CategoryPage = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Medicine
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Generic Name
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Company
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Price
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {medicines.map((medicine) => (
-                    <tr key={medicine._id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <img
-                            className="h-12 w-12 rounded-lg object-cover"
-                            src={
-                              medicine.imageUrl ||
-                              "https://i.ibb.co/v6LGC7hK/image.png"
-                            }
-                            alt={medicine.itemName}
-                            onError={(e) => {
-                              e.target.src =
-                                "https://i.ibb.co/v6LGC7hK/image.png";
-                            }}
-                          />
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              {medicine.itemName}
-                            </div>
-                            <div className="text-xs text-gray-500">
-                              {medicine.massUnit && `${medicine.massUnit}`}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+              {medicines.map((medicine) => (
+                <div
+                  key={medicine._id}
+                  className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300"
+                >
+                  {/* Discount Badge */}
+                  {medicine.discountPercentage > 0 && (
+                    <div className="absolute top-3 left-3 z-10 bg-error text-white px-3 py-1 rounded-full text-sm font-bold">
+                      {medicine.discountPercentage}% OFF
+                    </div>
+                  )}
+
+                  {/* Category Badge */}
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                      {categoryName}
+                    </span>
+                  </div>
+
+                  {/* Image */}
+                  <figure className="h-48 overflow-hidden">
+                    <img
+                      src={
+                        medicine.imageUrl ||
+                        "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop"
+                      }
+                      alt={medicine.itemName}
+                      className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.src =
+                          "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop";
+                      }}
+                    />
+                  </figure>
+
+                  {/* Card Body */}
+                  <div className="card-body p-4">
+                    {/* Title */}
+                    <h3 className="card-title text-lg line-clamp-2 min-h-[3.5rem]">
+                      {medicine.itemName}
+                    </h3>
+
+                    {/* Description */}
+                    <div className="min-h-[3rem]">
+                      <p className="text-sm text-gray-600 line-clamp-1">
                         {medicine.genericName}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {medicine.company}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        <div className="flex items-center">
-                          <span className="text-lg font-semibold text-green-600">
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        by {medicine.company}
+                      </p>
+                    </div>
+
+                    {/* Price */}
+                    <div className="my-3">
+                      {medicine.discountPercentage > 0 ? (
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-2xl font-bold text-primary">
+                              ৳
+                              {(
+                                medicine.perUnitPrice *
+                                (1 - medicine.discountPercentage / 100)
+                              ).toFixed(0)}
+                            </span>
+                            <span className="text-lg line-through text-gray-400">
+                              ৳{medicine.perUnitPrice}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-500">
+                            per {medicine.massUnit || "unit"}
+                          </p>
+                        </div>
+                      ) : (
+                        <div>
+                          <span className="text-2xl font-bold text-green-600">
                             ৳{medicine.perUnitPrice}
                           </span>
-                          {medicine.discountPercentage > 0 && (
-                            <span className="ml-2 text-xs bg-red-100 text-red-800 px-2 py-1 rounded">
-                              {medicine.discountPercentage}% OFF
-                            </span>
-                          )}
+                          <p className="text-xs text-gray-500">
+                            per {medicine.massUnit || "unit"}
+                          </p>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        <button
-                          onClick={() => handleAddToCart(medicine)}
-                          className="medical-btn-primary px-3 py-1 text-sm"
-                        >
-                          <FaShoppingCart className="inline mr-1" />
-                          Select
-                        </button>
-                        <button
-                          onClick={() => handleViewDetails(medicine)}
-                          className="medical-btn-secondary px-3 py-1 text-sm"
-                        >
-                          <FaEye className="inline mr-1" />
-                          View
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      )}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="card-actions flex gap-2">
+                      <button
+                        className="btn btn-primary btn-sm flex-1"
+                        onClick={() => handleAddToCart(medicine)}
+                      >
+                        <FaShoppingCart className="mr-1" />
+                        Add to Cart
+                      </button>
+                      <button
+                        className="btn btn-outline btn-sm"
+                        onClick={() => handleViewDetails(medicine)}
+                      >
+                        <FaEye />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Pagination */}
             {pagination.total > 1 && (
-              <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-                <div className="flex-1 flex justify-between items-center">
-                  <div className="text-sm text-gray-700">
-                    Page {pagination.current} of {pagination.total}
-                  </div>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => setPage(page - 1)}
-                      disabled={page === 1}
-                      className="medical-btn-secondary px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <FaChevronLeft className="inline mr-1" />
-                      Previous
-                    </button>
-                    <button
-                      onClick={() => setPage(page + 1)}
-                      disabled={page >= pagination.total}
-                      className="medical-btn-primary px-3 py-1 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      Next
-                      <FaChevronRight className="inline ml-1" />
-                    </button>
-                  </div>
+              <div className="bg-white rounded-lg shadow-md px-6 py-4 flex items-center justify-between">
+                <div className="text-sm text-gray-700">
+                  Page {pagination.current} of {pagination.total}
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setPage(page - 1)}
+                    disabled={page === 1}
+                    className="medical-btn-secondary px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <FaChevronLeft className="inline mr-1" />
+                    Previous
+                  </button>
+                  <button
+                    onClick={() => setPage(page + 1)}
+                    disabled={page >= pagination.total}
+                    className="medical-btn-primary px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Next
+                    <FaChevronRight className="inline ml-1" />
+                  </button>
                 </div>
               </div>
             )}
-          </div>
+          </>
         )}
 
         {/* Medicine Details Modal */}
