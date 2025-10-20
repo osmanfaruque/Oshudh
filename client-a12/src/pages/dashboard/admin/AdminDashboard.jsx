@@ -79,11 +79,11 @@ const AdminDashboard = () => {
     retryDelay: 1000,
   });
 
-  // Fetch payments for chart data
+  // Fetch orders for chart data
   const { data: payments = [] } = useQuery({
-    queryKey: ["allPayments"],
+    queryKey: ["allOrders"],
     queryFn: async () => {
-      const { data } = await axios.get(`${API_CONFIG.BASE_URL}/payments`, {
+      const { data } = await axios.get(`${API_CONFIG.BASE_URL}/orders`, {
         headers: API_CONFIG.HEADERS,
       });
       return data || [];
@@ -98,19 +98,19 @@ const AdminDashboard = () => {
     const monthlyRevenue = months.map((month, index) => {
       return payments
         .filter((payment) => {
-          const paymentDate = new Date(payment.date);
+          const paymentDate = new Date(payment.createdAt);
           return (
             paymentDate.getFullYear() === currentYear &&
             paymentDate.getMonth() === index &&
             payment.status === "paid"
           );
         })
-        .reduce((sum, p) => sum + (p.amount || 0), 0);
+        .reduce((sum, p) => sum + (p.total || 0), 0);
     });
 
     const monthlyOrders = months.map((month, index) => {
       return payments.filter((payment) => {
-        const paymentDate = new Date(payment.date);
+        const paymentDate = new Date(payment.createdAt);
         return (
           paymentDate.getFullYear() === currentYear &&
           paymentDate.getMonth() === index

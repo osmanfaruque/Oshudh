@@ -49,12 +49,12 @@ const UserDashboard = () => {
     setTitle("User Dashboard | Oshudh");
   }, [setTitle]);
 
-  // Fetch user payment history for statistics
+  // Fetch user orders for statistics
   const { data: payments = [] } = useQuery({
-    queryKey: ["userPayments", currentUser?.email],
+    queryKey: ["userOrders", currentUser?.email],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${API_CONFIG.BASE_URL}/payments?buyerEmail=${currentUser.email}`,
+        `${API_CONFIG.BASE_URL}/orders?userEmail=${currentUser.email}`,
         { headers: API_CONFIG.HEADERS }
       );
       return data || [];
@@ -65,7 +65,7 @@ const UserDashboard = () => {
   // Calculate stats from actual data
   const userStats = {
     totalOrders: payments.length,
-    totalSpent: payments.reduce((sum, p) => sum + (p.amount || 0), 0),
+    totalSpent: payments.reduce((sum, p) => sum + (p.total || 0), 0),
     pendingOrders: payments.filter((p) => p.status === "pending").length,
     completedOrders: payments.filter((p) => p.status === "paid").length,
   };
@@ -83,7 +83,7 @@ const UserDashboard = () => {
 
     const orderCounts = last7Days.map((day) => {
       return payments.filter((payment) => {
-        const paymentDate = new Date(payment.date).toLocaleDateString("en-US", { 
+        const paymentDate = new Date(payment.createdAt).toLocaleDateString("en-US", { 
           month: "short", 
           day: "numeric" 
         });
