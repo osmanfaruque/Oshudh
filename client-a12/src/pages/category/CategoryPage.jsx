@@ -201,7 +201,7 @@ const CategoryPage = () => {
                     setSearch("");
                     setPage(1);
                   }}
-                  className="medical-btn-secondary"
+                  className="medical-btn-outline"
                 >
                   Clear Search
                 </button>
@@ -329,7 +329,7 @@ const CategoryPage = () => {
                   <button
                     onClick={() => setPage(page - 1)}
                     disabled={page === 1}
-                    className="medical-btn-secondary px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="medical-btn-outline px-4 py-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <FaChevronLeft className="inline mr-1" />
                     Previous

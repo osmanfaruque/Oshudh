@@ -334,14 +334,14 @@ const ManageCategories = () => {
               <div className="flex items-center space-x-3">
                 <button
                   onClick={() => handleEditCategory(category)}
-                  className="flex-1 medical-btn-secondary text-sm py-2 flex items-center justify-center"
+                  className="flex-1 medical-btn-outline text-sm py-2 flex items-center justify-center"
                 >
                   <FaEdit className="mr-2" />
                   Edit
                 </button>
                 <button
                   onClick={() => handleDeleteCategory(category)}
-                  className="flex-1 bg-red-600 hover:bg-red-700 text-white text-sm py-2 rounded-lg transition-colors flex items-center justify-center"
+                  className="flex-1 medical-btn-outline text-sm py-2 flex items-center justify-center"
                   disabled={category.medicineCount > 0}
                 >
                   <FaTrash className="mr-2" />

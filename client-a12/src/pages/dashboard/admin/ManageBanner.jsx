@@ -476,7 +476,7 @@ const ManageBanner = () => {
                           <button
                             onClick={() => handleAdvertAction(advert, "approve")}
                             disabled={toggleAdvertMutation.isLoading}
-                            className="px-2 py-1 text-xs bg-green-600 hover:bg-green-700 text-white rounded transition-colors disabled:opacity-50"
+                            className="px-2 py-1 text-xs medical-btn-primary disabled:opacity-50"
                             title="Approve"
                           >
                             <FaCheck />
@@ -484,7 +484,7 @@ const ManageBanner = () => {
                           <button
                             onClick={() => handleAdvertAction(advert, "reject")}
                             disabled={toggleAdvertMutation.isLoading}
-                            className="px-2 py-1 text-xs bg-red-600 hover:bg-red-700 text-white rounded transition-colors disabled:opacity-50"
+                            className="px-2 py-1 text-xs medical-btn-outline disabled:opacity-50"
                             title="Reject"
                           >
                             <FaTimes />
@@ -499,8 +499,8 @@ const ManageBanner = () => {
                           disabled={toggleAdvertMutation.isLoading}
                           className={`px-3 py-1 text-xs rounded-lg transition-colors disabled:opacity-50 ${
                             advert.isActive
-                              ? "bg-red-600 hover:bg-red-700 text-white"
-                              : "bg-green-600 hover:bg-green-700 text-white"
+                              ? "medical-btn-outline"
+                              : "medical-btn-primary"
                           }`}
                         >
                           {advert.isActive ? (

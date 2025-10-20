@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
+import { useUserRole } from "../../hooks/useUserRole";
 import { useQuery } from "@tanstack/react-query";
 import API_CONFIG from "../../configs/api.config";
 import axios from "axios";
@@ -24,9 +25,24 @@ import { MdLanguage } from "react-icons/md";
 
 const NavBar = () => {
   const { currentUser, logout } = useAuth();
+  const { userRole } = useUserRole();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const { cartCount } = useCart();
+
+  // Get profile path based on role
+  const getProfilePath = () => {
+    if (!currentUser) return "/login";
+    switch (userRole) {
+      case "admin":
+        return "/dashboard/admin/profile";
+      case "seller":
+        return "/dashboard/seller/profile";
+      case "user":
+      default:
+        return "/dashboard/user/profile";
+    }
+  };
 
   // Define visible routes
   const navLinks = !currentUser
@@ -39,7 +55,8 @@ const NavBar = () => {
         { to: "/", label: "Home" },
         { to: "/shop", label: "Shop" },
         { to: "/cart", label: `Cart${cartCount ? ` (${cartCount})` : ""}` },
-        { to: "/checkout", label: "Checkout" }
+        { to: "/checkout", label: "Checkout" },
+        { to: getProfilePath(), label: "Profile" },
       ];
 
   const handleLogout = () => {
@@ -229,31 +246,37 @@ const NavBar = () => {
                     tabIndex={0}
                     className="menu menu-sm dropdown-content mt-3 z-[60] p-2 shadow bg-white rounded-box w-60 text-gray-700"
                   >
-                    <li className="p-2 font-semibold">
-                      {currentUser.displayName || currentUser.email || "User"}
+                    <li className="p-2 font-semibold border-b border-gray-200">
+                      <div className="flex items-center gap-2">
+                        <FaUser className="text-blue-600" />
+                        <span>{currentUser.displayName || currentUser.email || "User"}</span>
+                      </div>
+                    </li>
+                    <div className="divider my-1"></div>
+                    {/* Profile Link - Most Important */}
+                    <li>
+                      <Link to={getProfilePath()} className="flex items-center gap-2 font-medium text-blue-600 hover:bg-blue-50">
+                        <FaUser />
+                        My Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/dashboard" className="flex items-center gap-2 hover:bg-gray-50">
+                        <FaTachometerAlt />
+                        Dashboard
+                      </Link>
                     </li>
                     <div className="divider my-1"></div>
                     {/* Protected quick links */}
                     <li className="menu-title">Quick Access</li>
-                    <li><Link to="/cart">Cart</Link></li>
-                    <li><Link to="/checkout">Checkout</Link></li>
-                    <li><Link to="/invoice">Invoice</Link></li>
-                    <li><Link to="/dashboard">Dashboard</Link></li>
+                    <li><Link to="/cart">🛒 Cart</Link></li>
+                    <li><Link to="/checkout">💳 Checkout</Link></li>
+                    <li><Link to="/invoice">📄 Invoice</Link></li>
                     <div className="divider my-1"></div>
-                    <li>
-                      <Link to="/update-profile" className="flex items-center">
-                        <FaUser className="mr-2" /> Update Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/dashboard" className="flex items-center">
-                        <FaTachometerAlt className="mr-2" /> Dashboard
-                      </Link>
-                    </li>
                     <li>
                       <button
                         onClick={handleLogout}
-                        className="flex items-center w-full text-left"
+                        className="flex items-center w-full text-left text-blue-600 hover:bg-blue-50"
                       >
                         <FaSignOutAlt className="mr-2" /> Logout
                       </button>

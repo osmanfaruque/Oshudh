@@ -27,6 +27,7 @@ import DashboardLayout from "../layouts/dashboard/DashboardLayout.jsx";
 
 // Admin Dashboard
 import AdminDashboard from "../pages/dashboard/admin/AdminDashboard.jsx";
+import AdminProfile from "../pages/dashboard/admin/AdminProfile.jsx";
 import ManageUsers from "../pages/dashboard/admin/ManageUsers.jsx";
 import ManageCategories from "../pages/dashboard/admin/ManageCategories.jsx";
 import PaymentManagement from "../pages/dashboard/admin/PaymentManagement.jsx";
@@ -35,12 +36,14 @@ import ManageBanner from "../pages/dashboard/admin/ManageBanner.jsx";
 
 // Seller Dashboard
 import SellerDashboard from "../pages/dashboard/seller/SellerDashboard.jsx";
+import SellerProfile from "../pages/dashboard/seller/SellerProfile.jsx";
 import ManageMedicines from "../pages/dashboard/seller/ManageMedicines.jsx";
 import PaymentHistory from "../pages/dashboard/seller/PaymentHistory.jsx";
 import AskForAdvertisement from "../pages/dashboard/seller/AskForAdvertisement.jsx";
 
 // User Dashboard
 import UserDashboard from "../pages/dashboard/user/UserDashboard.jsx";
+import UserProfile from "../pages/dashboard/user/UserProfile.jsx";
 import UserPaymentHistory from "../pages/dashboard/user/UserPaymentHistory.jsx";
 
 const router = createBrowserRouter([
@@ -104,6 +107,10 @@ const router = createBrowserRouter([
         element: <AdminDashboard />,
       },
       {
+        path: "admin/profile",
+        element: <AdminProfile />,
+      },
+      {
         path: "admin/users",
         element: <ManageUsers />,
       },
@@ -130,6 +137,10 @@ const router = createBrowserRouter([
         element: <SellerDashboard />,
       },
       {
+        path: "seller/profile",
+        element: <SellerProfile />,
+      },
+      {
         path: "seller/medicines",
         element: <ManageMedicines />,
       },
@@ -146,6 +157,10 @@ const router = createBrowserRouter([
       {
         path: "user",
         element: <UserDashboard />,
+      },
+      {
+        path: "user/profile",
+        element: <UserProfile />,
       },
       {
         path: "user/payments",

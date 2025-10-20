@@ -21,12 +21,13 @@ body {
   @apply bg-white shadow-md rounded-lg border hover:shadow-lg transition-shadow duration-300;
 }
 
+/* Button Styles - Only 2 Types as per requirements */
 .medical-btn-primary {
-  @apply bg-blue-400 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md;
 }
 
-.medical-btn-secondary {
-  @apply bg-green-400 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+.medical-btn-outline {
+  @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium py-2 px-4 rounded-lg transition-all duration-200;
 }
 
 /* Swiper Styles */

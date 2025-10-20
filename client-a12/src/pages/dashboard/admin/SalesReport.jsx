@@ -517,7 +517,7 @@ const SalesReport = () => {
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={exportToPDF}
-                className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg text-sm flex items-center justify-center"
+                className="medical-btn-primary text-sm flex items-center justify-center"
               >
                 <FaFilePdf className="mr-1" />
                 PDF
@@ -525,7 +525,7 @@ const SalesReport = () => {
 
               <button
                 onClick={exportToExcel}
-                className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg text-sm flex items-center justify-center"
+                className="medical-btn-primary text-sm flex items-center justify-center"
               >
                 <FaFileExcel className="mr-1" />
                 Excel
@@ -534,7 +534,7 @@ const SalesReport = () => {
               <CSVLink
                 data={exportData}
                 filename={`sales-report-${dateFrom}-to-${dateTo}.csv`}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm flex items-center justify-center"
+                className="medical-btn-primary text-sm flex items-center justify-center"
               >
                 <FaFileCsv className="mr-1" />
                 CSV
@@ -542,7 +542,7 @@ const SalesReport = () => {
 
               <button
                 onClick={exportToWord}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-2 rounded-lg text-sm flex items-center justify-center"
+                className="medical-btn-outline text-sm flex items-center justify-center"
               >
                 <FaDownload className="mr-1" />
                 DOC

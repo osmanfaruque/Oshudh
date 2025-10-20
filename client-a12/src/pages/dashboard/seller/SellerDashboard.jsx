@@ -106,15 +106,15 @@ const SellerDashboard = () => {
 
           <a
             href="/dashboard/seller/payments"
-            className="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+            className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
           >
             <div className="flex items-center">
-              <FaShoppingCart className="text-2xl text-green-600 mr-3" />
+              <FaShoppingCart className="text-2xl text-blue-600 mr-3" />
               <div>
-                <h4 className="font-semibold text-green-800">
+                <h4 className="font-semibold text-blue-800">
                   Payment History
                 </h4>
-                <p className="text-sm text-green-600">
+                <p className="text-sm text-blue-600">
                   View purchase history with status
                 </p>
               </div>
@@ -123,15 +123,15 @@ const SellerDashboard = () => {
 
           <a
             href="/dashboard/seller/advertise"
-            className="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+            className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
           >
             <div className="flex items-center">
-              <FaBullhorn className="text-2xl text-purple-600 mr-3" />
+              <FaBullhorn className="text-2xl text-blue-600 mr-3" />
               <div>
-                <h4 className="font-semibold text-purple-800">
+                <h4 className="font-semibold text-blue-800">
                   Ask For Advertisement
                 </h4>
-                <p className="text-sm text-purple-600">
+                <p className="text-sm text-blue-600">
                   Request slider advertisements
                 </p>
               </div>

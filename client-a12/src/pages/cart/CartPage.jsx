@@ -296,7 +296,7 @@ const CartPage = () => {
               {/* Continue Shopping */}
               <Link
                 to="/shop"
-                className="w-full medical-btn-secondary text-center block py-2 mt-3"
+                className="w-full medical-btn-outline text-center block py-2 mt-3"
               >
                 Continue Shopping
               </Link>

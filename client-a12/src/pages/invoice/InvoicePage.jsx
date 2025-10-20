@@ -140,7 +140,7 @@ const InvoicePage = () => {
           </button>
           <button
             onClick={printInvoice}
-            className="flex items-center justify-center medical-btn-secondary px-6 py-3"
+            className="flex items-center justify-center medical-btn-outline px-6 py-3"
           >
             <FaPrint className="mr-2" />
             Print Invoice
@@ -154,7 +154,7 @@ const InvoicePage = () => {
           </Link>
           <Link
             to="/"
-            className="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg transition-colors"
+            className="flex items-center justify-center medical-btn-primary px-6 py-3"
           >
             <FaHome className="mr-2" />
             Go Home

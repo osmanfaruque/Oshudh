@@ -88,125 +88,179 @@ const AdminDashboard = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Admin Homepage</h1>
-        <p className="text-gray-600">Total sales revenue of the website</p>
+        <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+        <p className="text-gray-600">
+          Overview of your platform's performance and statistics
+        </p>
       </div>
 
-      {/* Main Stats Cards */}
+      {/* Main Stats Cards - Revenue Focus */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+        <div className="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-lg shadow-lg p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-1">Total Sales Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">
+              <p className="text-green-100 mb-1 flex items-center gap-2">
+                <FaDollarSign className="text-xl" />
+                Total Sales Revenue
+              </p>
+              <p className="text-4xl font-bold">
                 ৳{stats?.totalSalesRevenue?.toLocaleString() || "0"}
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-green-100 text-sm mt-2">
                 From {stats?.totalOrders || 0} orders
               </p>
             </div>
-            <div className="p-3 rounded-lg bg-green-50">
-              <FaDollarSign className="text-2xl text-green-600" />
+            <div className="p-4 rounded-lg bg-white/20 backdrop-blur-sm">
+              <FaChartLine className="text-3xl" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+        <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-lg shadow-lg p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-1">Paid Total</p>
-              <p className="text-3xl font-bold text-blue-600">
+              <p className="text-blue-100 mb-1 flex items-center gap-2">
+                <FaCheckCircle className="text-xl" />
+                Paid Total
+              </p>
+              <p className="text-4xl font-bold">
                 ৳{stats?.paidTotal?.toLocaleString() || "0"}
               </p>
-              <p className="text-xs text-gray-500 mt-1">
-                Completed transactions
-              </p>
+              <p className="text-blue-100 text-sm mt-2">Completed transactions</p>
             </div>
-            <div className="p-3 rounded-lg bg-blue-50">
-              <FaCheckCircle className="text-2xl text-blue-600" />
+            <div className="p-4 rounded-lg bg-white/20 backdrop-blur-sm">
+              <FaDollarSign className="text-3xl" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 border-l-4 border-orange-500">
+        <div className="bg-gradient-to-br from-orange-500 to-red-600 text-white rounded-lg shadow-lg p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600 mb-1">Pending Total</p>
-              <p className="text-3xl font-bold text-orange-600">
+              <p className="text-orange-100 mb-1 flex items-center gap-2">
+                <FaClock className="text-xl" />
+                Pending Total
+              </p>
+              <p className="text-4xl font-bold">
                 ৳{stats?.pendingTotal?.toLocaleString() || "0"}
               </p>
-              <p className="text-xs text-gray-500 mt-1">Awaiting payment</p>
+              <p className="text-orange-100 text-sm mt-2">Awaiting payment</p>
             </div>
-            <div className="p-3 rounded-lg bg-orange-50">
-              <FaClock className="text-2xl text-orange-600" />
+            <div className="p-4 rounded-lg bg-white/20 backdrop-blur-sm">
+              <FaClock className="text-3xl" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Additional Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow-md p-6">
+      {/* Quick Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-purple-500">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Users</p>
-              <p className="text-2xl font-bold text-purple-600">
+              <p className="text-sm text-gray-600 mb-1">Total Users</p>
+              <p className="text-3xl font-bold text-purple-600">
                 {stats?.totalUsers || 0}
               </p>
+              <div className="mt-2 flex items-center gap-2 text-xs text-gray-500">
+                <div className="px-2 py-1 bg-purple-50 rounded">
+                  Sellers: {stats?.totalSellers || 0}
+                </div>
+              </div>
             </div>
             <div className="p-3 rounded-lg bg-purple-50">
-              <FaUsers className="text-2xl text-purple-600" />
+              <FaUsers className="text-3xl text-purple-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-pink-500">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Sellers</p>
-              <p className="text-2xl font-bold text-indigo-600">
-                {stats?.totalSellers || 0}
-              </p>
-            </div>
-            <div className="p-3 rounded-lg bg-indigo-50">
-              <FaUsers className="text-2xl text-indigo-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total Medicines</p>
-              <p className="text-2xl font-bold text-pink-600">
+              <p className="text-sm text-gray-600 mb-1">Total Medicines</p>
+              <p className="text-3xl font-bold text-pink-600">
                 {stats?.totalMedicines || 0}
               </p>
+              <p className="text-xs text-gray-500 mt-2">Products available</p>
             </div>
             <div className="p-3 rounded-lg bg-pink-50">
-              <FaPills className="text-2xl text-pink-600" />
+              <FaPills className="text-3xl text-pink-600" />
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-teal-500">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-gray-600">Total Orders</p>
-              <p className="text-2xl font-bold text-teal-600">
+              <p className="text-sm text-gray-600 mb-1">Total Orders</p>
+              <p className="text-3xl font-bold text-teal-600">
                 {stats?.totalOrders || 0}
               </p>
+              <p className="text-xs text-gray-500 mt-2">All time orders</p>
             </div>
             <div className="p-3 rounded-lg bg-teal-50">
-              <FaShoppingCart className="text-2xl text-teal-600" />
+              <FaShoppingCart className="text-3xl text-teal-600" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-indigo-500">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 mb-1">Avg. Order Value</p>
+              <p className="text-3xl font-bold text-indigo-600">
+                ৳
+                {stats?.totalOrders > 0
+                  ? Math.round(stats.totalSalesRevenue / stats.totalOrders)
+                  : 0}
+              </p>
+              <p className="text-xs text-gray-500 mt-2">Per transaction</p>
+            </div>
+            <div className="p-3 rounded-lg bg-indigo-50">
+              <FaDollarSign className="text-3xl text-indigo-600" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Admin Features  */}
+      {/* Chart Placeholder */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-6">
-          Admin Dashboard Features
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <FaChartLine className="text-blue-600" />
+          Sales Analytics Overview
+        </h3>
+        <div className="h-80 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-lg border-2 border-dashed border-blue-200">
+          <div className="text-center">
+            <FaChartLine className="text-8xl text-blue-300 mx-auto mb-4" />
+            <p className="text-gray-600 font-medium text-lg">
+              Sales Trend Chart
+            </p>
+            <p className="text-sm text-gray-500 mt-2">
+              Revenue, orders, and growth metrics visualization
+            </p>
+            <div className="mt-4 flex gap-4 justify-center text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span className="text-gray-600">Revenue</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <span className="text-gray-600">Orders</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                <span className="text-gray-600">Users</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Admin Features Grid */}
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+          <FaUsers className="text-blue-600" />
+          Admin Management Tools
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Manage Users */}
@@ -228,15 +282,15 @@ const AdminDashboard = () => {
           {/* Manage Category */}
           <Link
             to="/dashboard/admin/categories"
-            className="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group"
+            className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
           >
             <div className="flex items-center">
-              <FaPills className="text-2xl text-green-600 mr-3 group-hover:scale-110 transition-transform" />
+              <FaPills className="text-2xl text-blue-600 mr-3 group-hover:scale-110 transition-transform" />
               <div>
-                <h4 className="font-semibold text-green-800">
+                <h4 className="font-semibold text-blue-800">
                   Manage Category
                 </h4>
-                <p className="text-sm text-green-600">
+                <p className="text-sm text-blue-600">
                   Add, update, delete medicine categories
                 </p>
               </div>
@@ -246,15 +300,15 @@ const AdminDashboard = () => {
           {/* Payment Management */}
           <Link
             to="/dashboard/admin/payments"
-            className="block p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors group"
+            className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
           >
             <div className="flex items-center">
-              <FaShoppingCart className="text-2xl text-yellow-600 mr-3 group-hover:scale-110 transition-transform" />
+              <FaShoppingCart className="text-2xl text-blue-600 mr-3 group-hover:scale-110 transition-transform" />
               <div>
-                <h4 className="font-semibold text-yellow-800">
+                <h4 className="font-semibold text-blue-800">
                   Payment Management
                 </h4>
-                <p className="text-sm text-yellow-600">
+                <p className="text-sm text-blue-600">
                   Accept pending payments
                 </p>
               </div>
@@ -264,13 +318,13 @@ const AdminDashboard = () => {
           {/* Sales Report */}
           <Link
             to="/dashboard/admin/sales-report"
-            className="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors group"
+            className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
           >
             <div className="flex items-center">
-              <FaChartLine className="text-2xl text-purple-600 mr-3 group-hover:scale-110 transition-transform" />
+              <FaChartLine className="text-2xl text-blue-600 mr-3 group-hover:scale-110 transition-transform" />
               <div>
-                <h4 className="font-semibold text-purple-800">Sales Report</h4>
-                <p className="text-sm text-purple-600">
+                <h4 className="font-semibold text-blue-800">Sales Report</h4>
+                <p className="text-sm text-blue-600">
                   View & download sales data
                 </p>
               </div>
@@ -280,15 +334,15 @@ const AdminDashboard = () => {
           {/* Manage Banner Advertise */}
           <Link
             to="/dashboard/admin/banner"
-            className="block p-4 bg-red-50 rounded-lg hover:bg-red-100 transition-colors group"
+            className="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
           >
             <div className="flex items-center">
-              <FaChartLine className="text-2xl text-red-600 mr-3 group-hover:scale-110 transition-transform" />
+              <FaChartLine className="text-2xl text-blue-600 mr-3 group-hover:scale-110 transition-transform" />
               <div>
-                <h4 className="font-semibold text-red-800">
+                <h4 className="font-semibold text-blue-800">
                   Manage Banner Advertise
                 </h4>
-                <p className="text-sm text-red-600">
+                <p className="text-sm text-blue-600">
                   Control homepage slider ads
                 </p>
               </div>

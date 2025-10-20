@@ -13,6 +13,7 @@ import {
   FaHome,
   FaList,
   FaCreditCard,
+  FaUser,
 } from "react-icons/fa";
 import { useAuth } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
@@ -58,7 +59,12 @@ const DashboardSidebar = ({ userRole }) => {
           {
             path: "/dashboard/admin",
             icon: FaTachometerAlt,
-            label: "Admin Dashboard",
+            label: "Dashboard",
+          },
+          {
+            path: "/dashboard/admin/profile",
+            icon: FaUser,
+            label: "My Profile",
           },
           {
             path: "/dashboard/admin/users",
@@ -91,7 +97,12 @@ const DashboardSidebar = ({ userRole }) => {
           {
             path: "/dashboard/seller",
             icon: FaTachometerAlt,
-            label: "Seller Dashboard",
+            label: "Dashboard",
+          },
+          {
+            path: "/dashboard/seller/profile",
+            icon: FaUser,
+            label: "My Profile",
           },
           {
             path: "/dashboard/seller/medicines",
@@ -115,7 +126,12 @@ const DashboardSidebar = ({ userRole }) => {
           {
             path: "/dashboard/user",
             icon: FaTachometerAlt,
-            label: "User Dashboard",
+            label: "Dashboard",
+          },
+          {
+            path: "/dashboard/user/profile",
+            icon: FaUser,
+            label: "My Profile",
           },
           {
             path: "/dashboard/user/payments",
@@ -162,7 +178,7 @@ const DashboardSidebar = ({ userRole }) => {
         <div className="px-4 mb-4">
           <Link
             to="/"
-            className="flex items-center px-4 py-2 text-gray-600 hover:bg-green-50 hover:text-green-600 rounded-lg transition-colors"
+            className="flex items-center px-4 py-2 text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors"
           >
             <FaHome className="mr-3" />
             Back to Home
@@ -209,7 +225,7 @@ const DashboardSidebar = ({ userRole }) => {
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 hover:text-red-700 rounded-lg transition-colors"
+          className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors"
         >
           <FaSignOutAlt className="mr-2" />
           Logout

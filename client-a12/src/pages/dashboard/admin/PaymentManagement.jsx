@@ -394,7 +394,7 @@ const PaymentManagement = () => {
                         <button
                           onClick={() => handleAcceptPayment(payment)}
                           disabled={acceptPaymentMutation.isLoading}
-                          className="medical-btn-secondary px-3 py-1 text-xs disabled:opacity-50"
+                          className="medical-btn-outline px-3 py-1 text-xs disabled:opacity-50"
                         >
                           <FaCheck className="mr-1" />
                           Accept

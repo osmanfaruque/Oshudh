@@ -458,7 +458,7 @@ const ManageUsers = () => {
                             <li>
                               <button
                                 onClick={() => handleRoleChange(user, "admin")}
-                                className="text-red-600 hover:bg-red-50"
+                                className="text-blue-600 hover:bg-blue-50"
                                 disabled={updateRoleMutation.isPending}
                               >
                                 <FaUserShield />
@@ -470,7 +470,7 @@ const ManageUsers = () => {
                             <li>
                               <button
                                 onClick={() => handleRoleChange(user, "seller")}
-                                className="text-green-600 hover:bg-green-50"
+                                className="text-blue-600 hover:bg-blue-50"
                                 disabled={updateRoleMutation.isPending}
                               >
                                 <FaStore />
