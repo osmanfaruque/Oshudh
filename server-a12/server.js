@@ -14,7 +14,7 @@ admin.initializeApp({
 });
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 
 // CORS Configuration
 app.use(
@@ -58,7 +58,7 @@ const verifyToken = async (req, res, next) => {
     req.user = {
       uid: decodedToken.uid,
       email: decodedToken.email,
-      name: decodedToken.name || decodedToken.email,
+      name: decodedToken.name,
     };
 
     next();
@@ -427,7 +427,7 @@ const saveUser = async (req, res) => {
       ...req.body,
       email: req.user.email,
       uid: req.user.uid,
-      name: req.body.name || req.user.name || req.user.email,
+      name: req.user.name,
       role: role,
       createdAt: existingUser ? existingUser.createdAt : new Date(),
       updatedAt: new Date(),
@@ -618,7 +618,7 @@ const saveOrder = async (req, res) => {
     const orderData = {
       ...req.body,
       userEmail: req.user.email,
-      status: req.body.status || "pending",
+      status: req.body.status,
       createdAt: new Date(),
     };
 
@@ -740,7 +740,7 @@ const getSellerPaymentHistory = async (req, res) => {
               { $group: { _id: null, total: { $sum: "$sellerEarning" } } },
             ])
             .toArray()
-        )[0]?.total || 0,
+        )[0]?.total,
       pendingEarnings:
         (
           await db
@@ -750,7 +750,7 @@ const getSellerPaymentHistory = async (req, res) => {
               { $group: { _id: null, total: { $sum: "$sellerEarning" } } },
             ])
             .toArray()
-        )[0]?.total || 0,
+        )[0]?.total,
       totalCommission:
         (
           await db
@@ -760,7 +760,7 @@ const getSellerPaymentHistory = async (req, res) => {
               { $group: { _id: null, total: { $sum: "$commission" } } },
             ])
             .toArray()
-        )[0]?.total || 0,
+        )[0]?.total,
     };
 
     res.json({
@@ -798,7 +798,7 @@ const getUserDashboard = async (req, res) => {
       success: true,
       data: {
         orderCount,
-        totalSpent: totalSpent[0]?.total || 0,
+        totalSpent: totalSpent[0]?.total,
       },
     });
   } catch (error) {
@@ -840,8 +840,8 @@ const getAdminDashboard = async (req, res) => {
     res.json({
       success: true,
       data: {
-        totalRevenue: totalRevenue[0]?.total || 0,
-        pendingRevenue: pendingRevenue[0]?.total || 0,
+        totalRevenue: totalRevenue[0]?.total,
+        pendingRevenue: pendingRevenue[0]?.total,
         totalUsers,
         totalSellers,
         totalMedicines,
@@ -1115,19 +1115,19 @@ const getSalesReport = async (req, res) => {
           salesItems.push({
             _id: order._id,
             orderId: order.transactionId || order._id,
-            medicineName: item.medicine?.medicineName || item.medicineName || 'N/A',
-            genericName: item.medicine?.genericName || item.genericName || 'N/A',
-            company: item.medicine?.company || item.company || 'N/A',
-            category: item.medicine?.category || item.category || 'N/A',
-            quantity: item.quantity || 0,
-            unitPrice: item.perUnitPrice || item.price || 0,
-            totalPrice: (item.quantity || 0) * (item.perUnitPrice || item.price || 0),
-            buyerName: order.userName || 'N/A',
-            buyerEmail: order.userEmail || 'N/A',
-            sellerName: item.medicine?.sellerName || 'N/A',
-            sellerEmail: item.medicine?.sellerEmail || 'N/A',
+            medicineName: item.medicine?.medicineName || item.medicineName,
+            genericName: item.medicine?.genericName || item.genericName,
+            company: item.medicine?.company || item.company,
+            category: item.medicine?.category || item.category,
+            quantity: item.quantity,
+            unitPrice: item.perUnitPrice || item.price,
+            totalPrice: (item.quantity) * (item.perUnitPrice || item.price),
+            buyerName: order.userName,
+            buyerEmail: order.userEmail,
+            sellerName: item.medicine?.sellerName,
+            sellerEmail: item.medicine?.sellerEmail,
             saleDate: order.createdAt,
-            paymentStatus: order.status || 'pending'
+            paymentStatus: order.status
           });
         });
       }
@@ -1158,7 +1158,7 @@ const getSalesReport = async (req, res) => {
         count: transformedSales.length,
         totalCount: total,
       },
-      totalRevenue: totalRevenue[0]?.total || 0,
+      totalRevenue: totalRevenue[0]?.total,
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -1391,8 +1391,8 @@ const getSellerDashboard = async (req, res) => {
     res.json({
       success: true,
       data: {
-        totalRevenue: totalRevenue[0]?.total || 0,
-        pendingRevenue: pendingRevenue[0]?.total || 0,
+        totalRevenue: totalRevenue[0]?.total,
+        pendingRevenue: pendingRevenue[0]?.total,
         totalMedicines,
         totalOrders,
       },
@@ -1442,7 +1442,7 @@ const addAdvertisementRequest = async (req, res) => {
     const adData = {
       ...req.body,
       sellerEmail: req.user.email,
-      sellerName: req.user.name || req.user.displayName,
+      sellerName: req.user.name,
       adminStatus: "pending",
       isActive: false,
       requestedAt: new Date(),
@@ -1516,7 +1516,7 @@ async function run() {
           const userData = {
             email: req.user.email,
             uid: req.user.uid,
-            name: req.user.name || req.user.email,
+            name: req.user.name,
             role: "user",
             createdAt: new Date(),
             updatedAt: new Date(),
