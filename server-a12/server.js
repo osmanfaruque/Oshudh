@@ -1489,7 +1489,7 @@ const getSellerAdvertisements = async (req, res) => {
 
 async function run() {
   try {
-    // await connectDB();
+    await connectDB();
 
     // =============== MEDICINES API ===============
     app.get("/medicines", getMedicines);
