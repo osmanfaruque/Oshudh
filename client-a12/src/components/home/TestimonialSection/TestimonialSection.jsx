@@ -82,10 +82,10 @@ const TestimonialSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4">
+          <h2 className="heading-primary mb-3 sm:mb-4">
             Customer Reviews 💬
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
+          <p className="text-body max-w-3xl mx-auto">
             Read genuine reviews from our satisfied customers across Bangladesh
             who trust Oshudh for their healthcare needs.
           </p>

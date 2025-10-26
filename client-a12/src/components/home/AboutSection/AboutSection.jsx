@@ -35,10 +35,10 @@ const AboutSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4">
+          <h2 className="heading-primary mb-3 sm:mb-4">
             Why Choose Oshudh? 💊
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
+          <p className="text-body max-w-3xl mx-auto">
             Your trusted partner for quality healthcare products delivered right
             to your door. We ensure safe, effective, and affordable medicines
             for you and your family.
@@ -53,10 +53,10 @@ const AboutSection = () => {
                 <div className="mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 flex justify-center">
                   <div className="text-4xl sm:text-5xl lg:text-6xl">{feature.icon}</div>
                 </div>
-                <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">
+                <h4 className="heading-tertiary mb-2 sm:mb-3">
                   {feature.title}
                 </h4>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                <p className="text-small leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -67,23 +67,23 @@ const AboutSection = () => {
         {/* About Content & Stats */}
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8 sm:mb-10">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 mb-4 sm:mb-6">
+            <h3 className="heading-secondary text-blue-600 mb-4 sm:mb-6">
               Health at Your Door 🏥
             </h3>
-            <div className="space-y-4 sm:space-y-5 text-gray-700">
-              <p className="text-base sm:text-lg leading-relaxed">
+            <div className="space-y-4 sm:space-y-5">
+              <p className="text-body">
                 <strong className="text-blue-600">Oshudh</strong> is Bangladesh's
                 leading online pharmacy platform, committed to making healthcare
                 accessible to everyone. We bridge the gap between patients and
                 quality medicines through our reliable delivery network.
               </p>
-              <p className="text-base sm:text-lg leading-relaxed">
+              <p className="text-body">
                 Our mission is to ensure that no one has to compromise on their
                 health due to unavailability or high costs of medicines. With
                 verified products from trusted manufacturers, we guarantee
                 authentic healthcare solutions.
               </p>
-              <p className="text-base sm:text-lg leading-relaxed">
+              <p className="text-body">
                 From tablets to syrups, capsules to injections - we offer a
                 comprehensive range of medicines with expert consultation and
                 doorstep delivery across Bangladesh.
@@ -94,16 +94,16 @@ const AboutSection = () => {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <div className="medical-card p-4 sm:p-6 text-center bg-white hover:shadow-xl transition-shadow">
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-600 mb-1 sm:mb-2">10K+</div>
-              <div className="text-xs sm:text-sm lg:text-base text-gray-600 font-medium">Happy Customers</div>
+              <div className="heading-secondary text-blue-600 mb-1 sm:mb-2">10K+</div>
+              <div className="text-small font-medium">Happy Customers</div>
             </div>
             <div className="medical-card p-4 sm:p-6 text-center bg-white hover:shadow-xl transition-shadow">
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-green-600 mb-1 sm:mb-2">500+</div>
-              <div className="text-xs sm:text-sm lg:text-base text-gray-600 font-medium">Medicines Available</div>
+              <div className="heading-secondary text-green-600 mb-1 sm:mb-2">500+</div>
+              <div className="text-small font-medium">Medicines Available</div>
             </div>
             <div className="medical-card p-4 sm:p-6 text-center bg-white hover:shadow-xl transition-shadow">
-              <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-purple-600 mb-1 sm:mb-2">24/7</div>
-              <div className="text-xs sm:text-sm lg:text-base text-gray-600 font-medium">Customer Support</div>
+              <div className="heading-secondary text-purple-600 mb-1 sm:mb-2">24/7</div>
+              <div className="text-small font-medium">Customer Support</div>
             </div>
           </div>
 

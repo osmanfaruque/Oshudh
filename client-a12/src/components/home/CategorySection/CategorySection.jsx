@@ -82,10 +82,10 @@ const CategorySection = () => {
     <section id="categories" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4">
+          <h2 className="heading-primary mb-3 sm:mb-4">
             Browse by Category 🏥
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto">
+          <p className="text-body max-w-2xl mx-auto">
             Find the right medicine quickly by browsing our organized categories
           </p>
         </div>
@@ -110,10 +110,10 @@ const CategorySection = () => {
               </div>
 
               <div className="p-4 sm:p-5 lg:p-6">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                <h3 className="heading-tertiary mb-2 group-hover:text-blue-600 transition-colors">
                   {category.categoryName}
                 </h3>
-                <p className="text-sm sm:text-base text-blue-600 font-semibold flex items-center gap-2">
+                <p className="text-small text-blue-600 font-semibold flex items-center gap-2">
                   <span className="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
                   {category.medicineCount} medicines available
                 </p>

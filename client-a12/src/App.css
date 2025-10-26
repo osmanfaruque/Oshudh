@@ -16,6 +16,50 @@ body {
   font-family: "Inter", system-ui, sans-serif;
 }
 
+/* ===== TYPOGRAPHY SYSTEM - CONSISTENT FONT SIZES ===== */
+
+/* Page Headings - Main Section Titles */
+.heading-primary {
+  @apply text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800;
+}
+
+/* Sub Headings - Card titles, Component headings */
+.heading-secondary {
+  @apply text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-800;
+}
+
+/* Smaller Headings - List titles, Small sections */
+.heading-tertiary {
+  @apply text-lg sm:text-xl lg:text-2xl font-semibold text-gray-800;
+}
+
+/* Normal Body Text - Paragraphs, Descriptions */
+.text-body {
+  @apply text-base sm:text-lg text-gray-700 leading-relaxed;
+}
+
+/* Small Text - Captions, Helper text */
+.text-small {
+  @apply text-sm sm:text-base text-gray-600;
+}
+
+/* Extra Small Text - Labels, Tiny info */
+.text-tiny {
+  @apply text-xs sm:text-sm text-gray-500;
+}
+
+/* Button Text */
+.text-button {
+  @apply text-base sm:text-lg font-semibold;
+}
+
+/* Badge/Tag Text */
+.text-badge {
+  @apply text-xs sm:text-sm font-semibold uppercase tracking-wide;
+}
+
+/* ===== END TYPOGRAPHY SYSTEM ===== */
+
 /* Simple Medical Components */
 .medical-card {
   @apply bg-white shadow-md rounded-lg border hover:shadow-lg transition-shadow duration-300;
