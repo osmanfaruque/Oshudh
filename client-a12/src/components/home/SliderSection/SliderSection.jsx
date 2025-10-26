@@ -50,6 +50,7 @@ const SliderSection = () => {
         description:
           "Trusted medicines delivered to your door. Your health is our priority.",
         sellerEmail: "info@oshudh.com",
+        badge: "Verified Quality"
       },
       {
         id: "default-2",
@@ -59,6 +60,7 @@ const SliderSection = () => {
         description:
           "Round-the-clock healthcare assistance when you need it most.",
         sellerEmail: "support@oshudh.com",
+        badge: "Always Available"
       },
       {
         id: "default-3",
@@ -68,11 +70,12 @@ const SliderSection = () => {
         description:
           "Get your medicines delivered quickly and safely to your doorstep.",
         sellerEmail: "support@oshudh.com",
+        badge: "Quick Delivery"
       },
     ];
 
     return (
-      <section className="relative w-full">
+      <section className="relative w-full hero-section">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           navigation
@@ -83,32 +86,58 @@ const SliderSection = () => {
               return '<span class="' + className + ' custom-pagination-bullet">' + (index + 1) + '</span>';
             },
           }}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
           loop={true}
-          className="w-full aspect-[16/9] md:aspect-[21/9] custom-slider"
+          className="w-full custom-slider"
         >
           {fallbackSlides.map((slide) => (
             <SwiperSlide key={slide.id}>
-              <div className="relative w-full h-full overflow-hidden">
-                {/* High-quality image with consistent aspect ratio */}
+              <div className="relative w-full h-full overflow-hidden hero-slide">
+                {/* High-quality image with overlay */}
                 <img
                   src={slide.medicineImage}
                   alt={slide.medicineName}
                   className="absolute inset-0 w-full h-full object-cover object-center"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center text-white px-4 max-w-2xl">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-                      {slide.medicineName}
-                    </h2>
-                    <p className="text-lg md:text-xl mb-6 drop-shadow-md">
-                      {slide.description}
-                    </p>
-                    <button className="medical-btn-primary text-lg px-8 py-3 shadow-lg hover:shadow-xl">
-                      Shop Now
-                    </button>
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
+                
+                {/* Hero Content */}
+                <div className="absolute inset-0 flex items-end sm:items-center pb-20 sm:pb-0">
+                  <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-full sm:max-w-2xl lg:max-w-3xl">
+                      {/* Badge */}
+                      <div className="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4 shadow-lg">
+                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                        {slide.badge}
+                      </div>
+                      
+                      {/* Main Heading */}
+                      <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-2 sm:mb-4 md:mb-6 leading-tight drop-shadow-2xl">
+                        {slide.medicineName}
+                      </h1>
+                      
+                      {/* Description */}
+                      <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-4 sm:mb-6 md:mb-8 drop-shadow-xl leading-snug">
+                        {slide.description}
+                      </p>
+                      
+                      {/* CTA Button - Single on mobile */}
+                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <a 
+                          href="/shop" 
+                          className="medical-btn-primary text-base sm:text-lg px-8 py-3.5 sm:py-4 shadow-2xl hover:shadow-blue-500/50 transform hover:scale-105 transition-all duration-300 text-center font-semibold"
+                        >
+                          🛒 Shop Now
+                        </a>
+                        <a 
+                          href="#categories" 
+                          className="hidden sm:inline-block medical-btn-secondary text-lg px-8 py-4 shadow-xl hover:shadow-white/30 transform hover:scale-105 transition-all duration-300 text-center font-semibold"
+                        >
+                          Browse Categories
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -120,7 +149,7 @@ const SliderSection = () => {
   }
 
   return (
-    <section className="relative w-full">
+    <section className="relative w-full hero-section">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -131,30 +160,57 @@ const SliderSection = () => {
             return '<span class="' + className + ' custom-pagination-bullet">' + (index + 1) + '</span>';
           },
         }}
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         loop={slides.length > 1}
-        className="w-full aspect-[16/9] md:aspect-[21/9] custom-slider"
+        className="w-full custom-slider"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide._id}>
-            <div className="relative w-full h-full overflow-hidden">
-              {/* High-quality image with consistent aspect ratio */}
+            <div className="relative w-full h-full overflow-hidden hero-slide">
+              {/* High-quality image with overlay */}
               <img
                 src={slide.medicineImage}
                 alt={slide.medicineName}
                 className="absolute inset-0 w-full h-full object-cover object-center"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-white px-4 max-w-2xl">
-                  <h2 className="text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-                    {slide.medicineName}
-                  </h2>
-                  <p className="text-lg md:text-xl mb-6 drop-shadow-md">{slide.description}</p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <div className="text-sm opacity-90 drop-shadow-md bg-black/20 px-4 py-2 rounded-full">
-                      By {slide.sellerName || 'Seller'}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
+              
+              {/* Hero Content */}
+              <div className="absolute inset-0 flex items-end sm:items-center pb-20 sm:pb-0">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                  <div className="max-w-full sm:max-w-2xl lg:max-w-3xl">
+                    {/* Badge */}
+                    <div className="inline-flex items-center gap-2 bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4 shadow-lg">
+                      <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                      Featured Medicine
+                    </div>
+                    
+                    {/* Main Heading */}
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-2 sm:mb-4 md:mb-6 leading-tight drop-shadow-2xl">
+                      {slide.medicineName}
+                    </h1>
+                    
+                    {/* Description */}
+                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-4 sm:mb-6 md:mb-8 drop-shadow-xl leading-snug">
+                      {slide.description}
+                    </p>
+                    
+                    {/* CTA Button - Single on mobile */}
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                      <a 
+                        href="/shop" 
+                        className="medical-btn-primary text-base sm:text-lg px-8 py-3.5 sm:py-4 shadow-2xl hover:shadow-blue-500/50 transform hover:scale-105 transition-all duration-300 text-center font-semibold"
+                      >
+                        🛒 Shop Now
+                      </a>
+                    </div>
+                    
+                    {/* Seller Info - Hidden on mobile */}
+                    <div className="hidden sm:block mt-6 md:mt-8">
+                      <p className="text-sm md:text-base text-gray-200 drop-shadow-md">
+                        By <span className="font-semibold text-white">{slide.sellerName || slide.sellerEmail}</span>
+                      </p>
                     </div>
                   </div>
                 </div>

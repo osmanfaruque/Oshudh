@@ -89,15 +89,15 @@ const DiscountProducts = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            🏷️ Discount Products
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4">
+            🏷️ Special Discounts
           </h2>
-          <p className="text-gray-600 text-lg">
-            Save more on quality medicines!
+          <p className="text-gray-600 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto">
+            Save more on quality medicines with our exclusive discount offers!
           </p>
         </div>
 
@@ -168,14 +168,15 @@ const DiscountProducts = () => {
             modules={[Autoplay, Navigation, Pagination]}
             spaceBetween={20}
             slidesPerView={1}
-            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            autoplay={{ delay: 3500, disableOnInteraction: false }}
             loop={discountProducts.length > 1}
             pagination={{ clickable: true }}
             navigation={discountProducts.length > 1}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-              1280: { slidesPerView: 4 },
+              480: { slidesPerView: 1, spaceBetween: 16 },
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 24 },
+              1280: { slidesPerView: 4, spaceBetween: 24 },
             }}
             className="pb-12"
           >

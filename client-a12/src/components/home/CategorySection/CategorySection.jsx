@@ -79,40 +79,42 @@ const CategorySection = () => {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            Medicine Categories
+    <section id="categories" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4">
+            Browse by Category 🏥
           </h2>
-          <p className="text-gray-600 text-lg">
-            Browse our wide range of healthcare products by category
+          <p className="text-gray-600 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto">
+            Find the right medicine quickly by browsing our organized categories
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {categories.map((category) => (
             <Link
               key={category.id || category._id}
               to={`/category/${category.categoryName.toLowerCase()}`}
-              className="medical-card p-6 hover:scale-105 transition-transform duration-300 group"
+              className="medical-card overflow-hidden hover:shadow-2xl transition-all duration-300 group"
             >
-              <div className="relative overflow-hidden rounded-lg mb-4">
+              <div className="relative overflow-hidden h-40 sm:h-48 lg:h-56">
                 <img
                   src={category.categoryImage}
                   alt={category.categoryName}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute top-4 right-4 bg-medical-primary text-white p-3 rounded-full">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                <div className="absolute top-4 right-4 bg-blue-500 text-white p-2.5 sm:p-3 rounded-full shadow-lg text-xl sm:text-2xl">
                   {category.icon}
                 </div>
               </div>
 
-              <div className="text-center">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              <div className="p-4 sm:p-5 lg:p-6">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
                   {category.categoryName}
                 </h3>
-                <p className="text-medical-secondary font-medium">
+                <p className="text-sm sm:text-base text-blue-600 font-semibold flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
                   {category.medicineCount} medicines available
                 </p>
               </div>

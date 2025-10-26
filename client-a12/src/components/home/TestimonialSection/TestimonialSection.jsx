@@ -78,14 +78,14 @@ const TestimonialSection = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-green-50">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-green-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-            What Our Customers Say 💬
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3 sm:mb-4">
+            Customer Reviews 💬
           </h2>
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+          <p className="text-gray-600 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
             Read genuine reviews from our satisfied customers across Bangladesh
             who trust Oshudh for their healthcare needs.
           </p>
@@ -95,10 +95,10 @@ const TestimonialSection = () => {
         <div className="relative">
           <Swiper
             modules={[Autoplay, Pagination]}
-            spaceBetween={30}
+            spaceBetween={24}
             slidesPerView={1}
             autoplay={{
-              delay: 4000,
+              delay: 4500,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }}
@@ -108,14 +108,21 @@ const TestimonialSection = () => {
             }}
             loop={true}
             breakpoints={{
+              480: {
+                slidesPerView: 1,
+                spaceBetween: 16,
+              },
               640: {
                 slidesPerView: 1,
+                spaceBetween: 20,
               },
               768: {
                 slidesPerView: 2,
+                spaceBetween: 24,
               },
               1024: {
                 slidesPerView: 3,
+                spaceBetween: 24,
               },
             }}
             className="pb-12"

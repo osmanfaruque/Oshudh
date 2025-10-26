@@ -1,7 +1,18 @@
 /* Custom Swiper Slider - Hero Section */
+.hero-section {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
 .custom-slider {
   width: 100%;
   max-width: 100vw;
+  height: 650px;
+}
+
+.hero-slide {
+  height: 650px;
 }
 
 /* Ensure consistent aspect ratio enforcement */
@@ -13,95 +24,195 @@
 
 /* Custom Swiper Pagination Styles */
 .custom-slider .swiper-pagination {
-    bottom: 24px !important;
-    z-index: 10;
+  bottom: 20px !important;
+  z-index: 10;
+  left: 50% !important;
+  transform: translateX(-50%);
+}
+
+/* Updated pagination bullet styles for numbers */
+.custom-pagination-bullet {
+  width: 40px !important;
+  height: 40px !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 4px !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: white !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid transparent !important;
+  opacity: 1 !important;
+}
+
+.custom-pagination-bullet.swiper-pagination-bullet-active {
+  background: #2563eb !important;
+  border-color: white !important;
+  transform: scale(1.15) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5) !important;
+}
+
+.custom-pagination-bullet:hover {
+  background: rgba(37, 99, 235, 0.8) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Navigation arrows styling */
+.custom-slider .swiper-button-next,
+.custom-slider .swiper-button-prev {
+  color: white !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(8px);
+  border-radius: 50% !important;
+  width: 56px !important;
+  height: 56px !important;
+  transition: all 0.3s ease !important;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.custom-slider .swiper-button-next:hover,
+.custom-slider .swiper-button-prev:hover {
+  background: rgba(37, 99, 235, 0.9) !important;
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.custom-slider .swiper-button-next::after,
+.custom-slider .swiper-button-prev::after {
+  font-size: 22px !important;
+  font-weight: bold;
+}
+
+/* Smooth transitions for slide content */
+.custom-slider .swiper-slide-active img {
+  animation: zoomIn 0.8s ease-out;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1280px) {
+  .custom-slider {
+    height: 700px;
   }
   
-  /* Updated pagination bullet styles for numbers */
-  .custom-pagination-bullet {
-    width: 40px !important;
-    height: 40px !important;
-    background: rgba(255, 255, 255, 0.3) !important;
-    border-radius: 50% !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 4px !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    color: white !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease !important;
-    border: 2px solid transparent !important;
-    opacity: 1 !important;
+  .hero-slide {
+    height: 700px;
+  }
+}
+
+/* Tablet landscape */
+@media (max-width: 1024px) {
+  .custom-slider {
+    height: 500px;
   }
   
-  .custom-pagination-bullet.swiper-pagination-bullet-active {
-    background: #2563eb !important;
-    border-color: white !important;
-    transform: scale(1.1) !important;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4) !important;
+  .hero-slide {
+    height: 500px;
   }
   
-  .custom-pagination-bullet:hover {
-    background: rgba(37, 99, 235, 0.8) !important;
-    transform: scale(1.05) !important;
-  }
-  
-  /* Navigation arrows styling */
   .custom-slider .swiper-button-next,
   .custom-slider .swiper-button-prev {
-    color: white !important;
-    background: rgba(0, 0, 0, 0.3) !important;
-    backdrop-filter: blur(4px);
-    border-radius: 50% !important;
     width: 50px !important;
     height: 50px !important;
-    transition: all 0.3s ease !important;
-  }
-  
-  .custom-slider .swiper-button-next:hover,
-  .custom-slider .swiper-button-prev:hover {
-    background: rgba(37, 99, 235, 0.9) !important;
-    transform: scale(1.1);
   }
 
   .custom-slider .swiper-button-next::after,
   .custom-slider .swiper-button-prev::after {
     font-size: 20px !important;
-    font-weight: bold;
+  }
+}
+
+/* Tablet portrait & Mobile landscape */
+@media (max-width: 768px) {
+  .custom-slider {
+    height: 520px;
   }
   
-  /* Smooth transitions for slide content */
-  .custom-slider .swiper-slide-active img {
-    animation: zoomIn 0.8s ease-out;
+  .hero-slide {
+    height: 520px;
   }
 
-  @keyframes zoomIn {
-    from {
-      transform: scale(1.1);
-    }
-    to {
-      transform: scale(1);
-    }
+  .custom-slider .swiper-button-next,
+  .custom-slider .swiper-button-prev {
+    display: none !important; /* Hide arrows on mobile */
   }
 
-  /* Mobile responsive adjustments */
-  @media (max-width: 768px) {
-    .custom-slider .swiper-button-next,
-    .custom-slider .swiper-button-prev {
-      width: 40px !important;
-      height: 40px !important;
-    }
-
-    .custom-slider .swiper-button-next::after,
-    .custom-slider .swiper-button-prev::after {
-      font-size: 16px !important;
-    }
-
-    .custom-pagination-bullet {
-      width: 32px !important;
-      height: 32px !important;
-      font-size: 12px !important;
-    }
+  .custom-pagination-bullet {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 12px !important;
+    margin: 0 3px !important;
   }
+  
+  .custom-slider .swiper-pagination {
+    bottom: 14px !important;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 640px) {
+  .custom-slider {
+    height: 560px;
+  }
+  
+  .hero-slide {
+    height: 560px;
+  }
+
+  .custom-slider .swiper-button-next,
+  .custom-slider .swiper-button-prev {
+    display: none !important;
+  }
+
+  .custom-pagination-bullet {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 11px !important;
+    margin: 0 2px !important;
+  }
+  
+  .custom-slider .swiper-pagination {
+    bottom: 12px !important;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 480px) {
+  .custom-slider {
+    height: 580px;
+  }
+  
+  .hero-slide {
+    height: 580px;
+  }
+  
+  .custom-pagination-bullet {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 10px !important;
+    margin: 0 2px !important;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 375px) {
+  .custom-slider {
+    height: 600px;
+  }
+  
+  .hero-slide {
+    height: 600px;
+  }
+}

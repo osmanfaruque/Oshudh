@@ -13,16 +13,20 @@ const HomePage = () => {
   }, [setTitle]);
 
   return (
-    <div className="min-h-screen ">
-      {/*Slider Section */}
+    <div className="min-h-screen">
+      {/* Hero/Slider Section - Main banner showcasing featured products */}
       <SliderSection />
-      {/*Category Card Section  */}
+      
+      {/* Category Section - Browse medicines by category */}
       <CategorySection />
-      {/*Discount products */}
+      
+      {/* Discount Products - Special offers and deals */}
       <DiscountProducts />
-      {/*About Section */}
+      
+      {/* About Section - Why choose us and our values */}
       <AboutSection />
-      {/*Testimonial Section */}
+      
+      {/* Testimonial Section - Customer reviews and feedback */}
       <TestimonialSection />
     </div>
   );
