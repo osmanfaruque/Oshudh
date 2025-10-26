@@ -22,6 +22,10 @@ import CheckoutPage from "../pages/checkout/CheckoutPage.jsx";
 import InvoicePage from "../pages/invoice/InvoicePage.jsx";
 import CategoryPage from "../pages/category/CategoryPage.jsx";
 
+// Other Pages
+import AboutPage from "../pages/about/AboutPage.jsx";
+import DiscountsPage from "../pages/discounts/DiscountsPage.jsx";
+
 // Dashboard Layout and Pages
 import DashboardLayout from "../layouts/dashboard/DashboardLayout.jsx";
 
@@ -56,6 +60,8 @@ const router = createBrowserRouter([
 
       // Public Routes
       { path: "shop", element: <ShopPage /> },
+      { path: "about", element: <AboutPage /> },
+      { path: "discounts", element: <DiscountsPage /> },
       { path: "category/:categoryName", element: <CategoryPage /> },
       { path: "login", element: <LogIn /> },
       { path: "register", element: <Register /> },

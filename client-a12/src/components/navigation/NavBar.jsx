@@ -89,14 +89,14 @@ const NavBar = () => {
     ? [
         { to: "/", label: "Home" },
         { to: "/shop", label: "Shop" },
-        { to: "/#why-choose-us", label: "Why Us", scroll: true },
-        { to: "/#customer-reviews", label: "Reviews", scroll: true },
+        { to: "/about", label: "About Us" },
+        { to: "/discounts", label: "Discounts" },
       ]
     : [
         { to: "/", label: "Home" },
         { to: "/shop", label: "Shop" },
-        { to: "/#why-choose-us", label: "Why Us", scroll: true },
-        { to: "/#customer-reviews", label: "Reviews", scroll: true },
+        { to: "/about", label: "About Us" },
+        { to: "/discounts", label: "Discounts" },
         { to: "/cart", label: `Cart${cartCount ? ` (${cartCount})` : ""}` },
         { to: "/checkout", label: "Checkout" },
         { to: getProfilePath(), label: "Profile" },
