@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useLocation } from "react-router";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
 import { useUserRole } from "../../hooks/useUserRole";
@@ -26,9 +26,50 @@ import { MdLanguage } from "react-icons/md";
 const NavBar = () => {
   const { currentUser, logout } = useAuth();
   const { userRole } = useUserRole();
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const { cartCount } = useCart();
+
+  // Track scroll position for active section
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ["why-choose-us", "customer-reviews"];
+      const scrollPosition = window.scrollY + 100; // offset for navbar
+
+      for (const sectionId of sections) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const { offsetTop, offsetHeight } = section;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            return;
+          }
+        }
+      }
+      setActiveSection("");
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Smooth scroll handler
+  const handleSmoothScroll = (e, sectionId) => {
+    e.preventDefault();
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const navbarHeight = 64; // navbar height
+      const sectionTop = section.offsetTop - navbarHeight;
+      window.scrollTo({
+        top: sectionTop,
+        behavior: "smooth",
+      });
+      setIsMobileMenuOpen(false);
+    }
+  };
 
   // Get profile path based on role
   const getProfilePath = () => {
@@ -45,15 +86,17 @@ const NavBar = () => {
   };
 
   // Define visible routes
+  const publicNavLinks = [];
+
   const navLinks = !currentUser
     ? [
         { to: "/", label: "Home" },
         { to: "/shop", label: "Shop" },
-        { to: "/category/tablet", label: "Categories" },
+        { to: "/#why-choose-us", label: "Why Us", scroll: true },
+        { to: "/#customer-reviews", label: "Reviews", scroll: true },
       ]
     : [
-        { to: "/", label: "Home" },
-        { to: "/shop", label: "Shop" },
+        ...publicNavLinks,
         { to: "/cart", label: `Cart${cartCount ? ` (${cartCount})` : ""}` },
         { to: "/checkout", label: "Checkout" },
         { to: getProfilePath(), label: "Profile" },
@@ -61,8 +104,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     logout()
-      .then(() => {
-      })
+      .then(() => {})
       .catch((error) => {
         console.error("Logout error:", error);
       });
@@ -73,15 +115,15 @@ const NavBar = () => {
     queryFn: async () => {
       try {
         const response = await axios.get(`${API_CONFIG.BASE_URL}/categories`);
-        
+
         if (!response.data.success) {
           throw new Error(response.data.error || "Failed to fetch categories");
         }
-        
-        return response.data.data.map(category => ({
+
+        return response.data.data.map((category) => ({
           name: category.categoryName.trim(),
           path: `/category/${category.categoryName.toLowerCase().trim()}`,
-          icon: getCategoryIcon(category.categoryName.trim())
+          icon: getCategoryIcon(category.categoryName.trim()),
         }));
       } catch (error) {
         console.error("Error fetching navbar categories:", error);
@@ -93,7 +135,7 @@ const NavBar = () => {
 
   const getCategoryIcon = (categoryName) => {
     const name = categoryName?.toLowerCase() || "";
-    
+
     switch (name) {
       case "tablet":
         return "💊";
@@ -125,20 +167,40 @@ const NavBar = () => {
 
           {/* Center: Desktop Nav */}
           <ul className="hidden md:flex items-center gap-4">
-            {navLinks.map((link) => (
-              <li key={link.to}>
-                <NavLink
-                  to={link.to}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-md text-sm font-medium ${
-                      isActive ? "bg-white/15" : "hover:bg-white/10"
-                    }`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const isScrollLink = link.to.includes("#");
+              const sectionId = isScrollLink ? link.to.split("#")[1] : "";
+              const isActive = isScrollLink 
+                ? activeSection === sectionId 
+                : location.pathname === link.to;
+
+              return (
+                <li key={link.to}>
+                  {isScrollLink ? (
+                    <a
+                      href={link.to}
+                      onClick={(e) => handleSmoothScroll(e, sectionId)}
+                      className={`px-3 py-2 rounded-md text-sm font-medium cursor-pointer ${
+                        isActive ? "bg-white/15" : "hover:bg-white/10"
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <NavLink
+                      to={link.to}
+                      className={({ isActive }) =>
+                        `px-3 py-2 rounded-md text-sm font-medium ${
+                          isActive ? "bg-white/15" : "hover:bg-white/10"
+                        }`
+                      }
+                    >
+                      {link.label}
+                    </NavLink>
+                  )}
+                </li>
+              );
+            })}
 
             {/* Categories dropdown kept for desktop hover */}
             <li
@@ -148,8 +210,18 @@ const NavBar = () => {
             >
               <button className="px-3 py-2 rounded-md text-sm font-medium hover:bg-white/10 flex items-center">
                 Categories
-                <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                <svg
+                  className="ml-1 w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </button>
               {isCategoryDropdownOpen && (
@@ -209,13 +281,20 @@ const NavBar = () => {
               {!currentUser ? (
                 <div className="flex items-center gap-2">
                   {/* Logged-out: keep CTA minimal */}
-                  <Link to="/login" className="btn btn-sm bg-white text-medical-primary border-none hover:bg-gray-100">
+                  <Link
+                    to="/login"
+                    className="btn btn-sm bg-white text-medical-primary border-none hover:bg-gray-100"
+                  >
                     Join Us
                   </Link>
                 </div>
               ) : (
                 <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
                     <div className="w-10 rounded-full overflow-hidden">
                       {currentUser.photoURL ? (
                         <img
@@ -249,19 +328,29 @@ const NavBar = () => {
                     <li className="p-2 font-semibold border-b border-gray-200">
                       <div className="flex items-center gap-2">
                         <FaUser className="text-blue-600" />
-                        <span>{currentUser.displayName || currentUser.email || "User"}</span>
+                        <span>
+                          {currentUser.displayName ||
+                            currentUser.email ||
+                            "User"}
+                        </span>
                       </div>
                     </li>
                     <div className="divider my-1"></div>
                     {/* Profile Link - Most Important */}
                     <li>
-                      <Link to={getProfilePath()} className="flex items-center gap-2 font-medium text-blue-600 hover:bg-blue-50">
+                      <Link
+                        to={getProfilePath()}
+                        className="flex items-center gap-2 font-medium text-blue-600 hover:bg-blue-50"
+                      >
                         <FaUser />
                         My Profile
                       </Link>
                     </li>
                     <li>
-                      <Link to="/dashboard" className="flex items-center gap-2 hover:bg-gray-50">
+                      <Link
+                        to="/dashboard"
+                        className="flex items-center gap-2 hover:bg-gray-50"
+                      >
                         <FaTachometerAlt />
                         Dashboard
                       </Link>
@@ -269,9 +358,15 @@ const NavBar = () => {
                     <div className="divider my-1"></div>
                     {/* Protected quick links */}
                     <li className="menu-title">Quick Access</li>
-                    <li><Link to="/cart">🛒 Cart</Link></li>
-                    <li><Link to="/checkout">💳 Checkout</Link></li>
-                    <li><Link to="/invoice">📄 Invoice</Link></li>
+                    <li>
+                      <Link to="/cart">🛒 Cart</Link>
+                    </li>
+                    <li>
+                      <Link to="/checkout">💳 Checkout</Link>
+                    </li>
+                    <li>
+                      <Link to="/invoice">📄 Invoice</Link>
+                    </li>
                     <div className="divider my-1"></div>
                     <li>
                       <button
@@ -301,19 +396,41 @@ const NavBar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden pb-3">
             <ul className="px-2 pt-2 space-y-1">
-              {navLinks.map((link) => (
-                <li key={link.to}>
-                  <NavLink
-                    to={link.to}
-                    className={({ isActive }) =>
-                      `block px-3 py-2 rounded-md text-sm ${isActive ? "bg-white/15" : "hover:bg-white/10"}`
-                    }
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </NavLink>
-                </li>
-              ))}
+              {navLinks.map((link) => {
+                const isScrollLink = link.to.includes("#");
+                const sectionId = isScrollLink ? link.to.split("#")[1] : "";
+                const isActive = isScrollLink 
+                  ? activeSection === sectionId 
+                  : location.pathname === link.to;
+
+                return (
+                  <li key={link.to}>
+                    {isScrollLink ? (
+                      <a
+                        href={link.to}
+                        onClick={(e) => handleSmoothScroll(e, sectionId)}
+                        className={`block px-3 py-2 rounded-md text-sm cursor-pointer ${
+                          isActive ? "bg-white/15" : "hover:bg-white/10"
+                        }`}
+                      >
+                        {link.label}
+                      </a>
+                    ) : (
+                      <NavLink
+                        to={link.to}
+                        className={({ isActive }) =>
+                          `block px-3 py-2 rounded-md text-sm ${
+                            isActive ? "bg-white/15" : "hover:bg-white/10"
+                          }`
+                        }
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {link.label}
+                      </NavLink>
+                    )}
+                  </li>
+                );
+              })}
 
               {/* Mobile categories */}
               <li className="px-3 py-2">

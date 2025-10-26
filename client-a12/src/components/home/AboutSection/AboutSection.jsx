@@ -31,7 +31,7 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-white via-blue-50 to-green-50">
+    <section id="why-choose-us" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-white via-blue-50 to-green-50 scroll-mt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-12 lg:mb-16">
