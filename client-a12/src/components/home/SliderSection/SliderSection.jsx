@@ -130,12 +130,6 @@ const SliderSection = () => {
                         >
                           🛒 Shop Now
                         </a>
-                        <a 
-                          href="#categories" 
-                          className="hidden sm:inline-block medical-btn-secondary text-lg px-8 py-4 shadow-xl hover:shadow-white/30 transform hover:scale-105 transition-all duration-300 text-center font-semibold"
-                        >
-                          Browse Categories
-                        </a>
                       </div>
                     </div>
                   </div>

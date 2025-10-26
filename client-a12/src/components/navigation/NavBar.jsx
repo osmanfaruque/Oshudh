@@ -85,9 +85,6 @@ const NavBar = () => {
     }
   };
 
-  // Define visible routes
-  const publicNavLinks = [];
-
   const navLinks = !currentUser
     ? [
         { to: "/", label: "Home" },
@@ -96,7 +93,10 @@ const NavBar = () => {
         { to: "/#customer-reviews", label: "Reviews", scroll: true },
       ]
     : [
-        ...publicNavLinks,
+        { to: "/", label: "Home" },
+        { to: "/shop", label: "Shop" },
+        { to: "/#why-choose-us", label: "Why Us", scroll: true },
+        { to: "/#customer-reviews", label: "Reviews", scroll: true },
         { to: "/cart", label: `Cart${cartCount ? ` (${cartCount})` : ""}` },
         { to: "/checkout", label: "Checkout" },
         { to: getProfilePath(), label: "Profile" },
